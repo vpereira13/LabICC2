@@ -1,9 +1,0 @@
-all: pratica2.c operacoes.o
-	gcc pratica2.c operacoes.o -o pratica2
-
-operacoes.o: operacoes.h operacoes.c
-	gcc -c operacoes.c
-
-run:
-	./pratica2
-
