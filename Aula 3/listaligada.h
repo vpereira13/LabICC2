@@ -1,3 +1,13 @@
+/**
+ * Laboratório de Introdução à Ciência da Computação II - SCC0220
+ *
+ * Prof: André Carlos Ponce de Leon Ferreira de Carvalho
+ *
+ * Aula 3
+ * Exercício 1 - Cálculo da Derivada e Reta Tangente
+ * Victor Luiz da Silva Mariano Pereira	8602444
+ */
+
 #ifndef _LISTALIGADA_H_
 #define _LISTALIGADA_H_
 
