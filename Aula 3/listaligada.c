@@ -131,6 +131,22 @@ int tamanhoLista(Lista *L){
 }
 
 /**
+ * Função responsável por esvaziar a lista, liberando toda a memória alocada
+ * @param L lista a ser esvaziada
+ */
+void esvaziaLista(Lista *L){
+	No *N;
+
+	while(L->tamanho > 0){
+		N = L->primeiro;
+		L->primeiro = N->proximo;
+		L->tamanho--;
+		free(N->item);
+		free(N);
+	}
+}
+
+/**
  * Função que aloca espaço de memória para um item e retorna ele, mas sem
  * conteúdo
  * @return item alocado, mas sem conteúdo
@@ -216,31 +232,4 @@ long int coeficienteItem(Item *I){
  */
 int expoenteItem(Item *I){
 	return (I->expoente);
-}
-
-Item *removeItem (int indice, Lista *L){
-	int i;
-	int tamanho;
-	No *pai;
-	No *seguinte;
-	Item *it;
-
-	it = iniciaItem();
-	tamanho = tamanhoLista(L);
-
-	// Caso a lista esteja vazia ou não exista essa posição
-	if(estaVazia(L) || indice >= tamanho)
-		return NULL;
-
-	pai = L->primeiro;
-
-	for(i = 0; i < indice; i++)
-		pai = pai->proximo;
-
-	seguinte = pai->proximo;
-	it = seguinte->item;
-
-	pai->proximo = seguinte->proximo;
-
-	return it;
 }

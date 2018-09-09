@@ -130,7 +130,14 @@ int main (int argc, char *argv[]){
 	printf("g(x) = ");
 	imprimeLista(tangente);
 
-	// Precisa liberar toda a memória alocada
+	// Liberando toda memória alocada
+	esvaziaLista(f);
+	free(f);
+	esvaziaLista(flinha);
+	free(flinha);
+	esvaziaLista(tangente);
+	free(tangente);
+
 
 	return 0;
 }

@@ -64,6 +64,12 @@ char estaVazia(Lista *);
  */
 int tamanhoLista(Lista *);
 
+/**
+ * Função responsável por esvaziar a lista, liberando toda a memória alocada
+ * @param L lista a ser esvaziada
+ */
+void esvaziaLista(Lista *);
+
 /*
  * CABEÇALHOS DAS FUNÇÕES REFERENTES AOS ITENS
  */
