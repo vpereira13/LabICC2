@@ -13,11 +13,6 @@
 #include <math.h>
 #include "listaligada.h"
 
-/*
-	TODO
-	- modificar a forma que está sendo recebida as entradas (não cobre o caso 4)
- */
-
 /**
  * Função que encontra o resultado da função dada em um determinado ponto
  * @param  L lista contendo a função a ser analisada
@@ -102,11 +97,10 @@ int main (int argc, char *argv[]){
 
 	// Recebendo os coeficientes, os expoentes e inserindo na lista
 	// (AINDA PRECISA MELHORAR, NÃO COBRE O CASO 4)
-	do{
-		scanf("%d %d\n", &coeficiente, &expoente);
+	while(scanf("%d %d\n", &coeficiente, &expoente) != EOF){
 		item = criaItem(coeficiente, expoente);
 		insereFim(f, item);
-	} while(expoente);
+	}
 
 	// Cálculo de y
 	y = calculaY(f, x);
