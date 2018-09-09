@@ -16,7 +16,6 @@
 /*
 	TODO
 	- modificar a forma que está sendo recebida as entradas (não cobre o caso 4)
-	- liberar memória alocada
  */
 
 /**
