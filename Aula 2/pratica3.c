@@ -231,9 +231,10 @@ int main (int argc, char *argv[]){
 	for (i = 0; i < n; i++)
 		encontra(palavras, tamanho, buscadas[i]);
 
-	// Liberando memória - AINDA PRECISA TERMINAR DE DESALOCAR MEMÓRIA
+	// Liberando memória
 	free(nome);
 	free(conteudo);
+	free(palavras);
 	free(palavra);
 	for (i = 0; i < n; i++)
 		free(buscadas[i]);
