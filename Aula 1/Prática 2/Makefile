@@ -46,7 +46,7 @@ zip:
 
 # Memory leak verification
 valgrind:
-	valgrind --leak-check=full ./$(BIN)
+	valgrind --leak-check=full --show-leak-kinds=all -v ./$(BIN)
 
 # Cleaning
 .PHONY : clean
