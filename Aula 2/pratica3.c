@@ -126,8 +126,9 @@ char *leConteudoArquivo(char *nomeArquivo){
 	rewind (arquivo);
 
 	// Alocando e lendo o conteúdo
-	conteudo = (char*) malloc (sizeof(char)*tamanho);
+	conteudo = (char*) malloc (sizeof(char) * (tamanho + 1));
 	fread (conteudo, 1, tamanho, arquivo);
+	conteudo[tamanho] = '\0';
 
 	// Fechando o arquivo (liberando memória) e retornando o conteúdo
 	fclose(arquivo);
