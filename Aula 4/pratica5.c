@@ -24,10 +24,30 @@ typedef struct atleta{
 	char *nome;
 }ATLETA;
 
+/**
+ * Função para comprar dois inteiros, feita para ser passada por parâmetro para
+ * a função de ordenação merge sort
+ * @param  a primeiro inteiro a ser comparado
+ * @param  b segundo inteiro a ser comparado
+ * @return   inteiro podendo ter os seguintes valores
+ *                0 - se os dois forem iguais
+ *              < 0 - se o primeiro for menor que o segundo
+ *              > 0 - se o primeiro for maior que o segundo
+ */
 int inteiroCMP(const void *a, const void *b){
 	return ((*(int*)a) - (*(int*)b));
 }
 
+/**
+ * Função para comparar duas strings, feita para ser passada por parametro para
+ * a função de ordenação merge sort
+ * @param  a primeira string a ser comparada
+ * @param  b segunda string a ser comparada
+ * @return   inteiro podendo ter os seguintes valores
+ *                0 - se as duas forem iguais
+ *              < 0 - se a primeira for menor que a segunda
+ *              > 0 - se a primeira for maior que a segunda
+ */
 int stringCMP(const void *a, const void *b){
 	return (strcmp(((char*)a), ((char*)b)));
 }
