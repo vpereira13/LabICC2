@@ -25,66 +25,6 @@ typedef struct atleta{
 }ATLETA;
 
 /**
- * Função para comprar dois inteiros, feita para ser passada por parâmetro para
- * a função de ordenação merge sort
- * @param  a primeiro inteiro a ser comparado
- * @param  b segundo inteiro a ser comparado
- * @return   inteiro podendo ter os seguintes valores
- *                0 - se os dois forem iguais
- *              < 0 - se o primeiro for menor que o segundo
- *              > 0 - se o primeiro for maior que o segundo
- */
-int inteiroCMP(const void *a, const void *b){
-	return ((*(int*)a) - (*(int*)b));
-}
-
-/**
- * Função para comparar duas strings, feita para ser passada por parametro para
- * a função de ordenação merge sort
- * @param  a primeira string a ser comparada
- * @param  b segunda string a ser comparada
- * @return   inteiro podendo ter os seguintes valores
- *                0 - se as duas forem iguais
- *              < 0 - se a primeira for menor que a segunda
- *              > 0 - se a primeira for maior que a segunda
- */
-int stringCMP(const void *a, const void *b){
-	return (strcmp(((char*)a), ((char*)b)));
-}
-
-void merge(ATLETA **vetor, int inicio, int meio, int fim){
-	int i;
-	int j = inicio;
-	int k = meio + 1;
-	int l = 0;
-
-	ATLETA **aux = (ATLETA **) malloc((fim-inicio + 1) * sizeof(ATLETA *));
-
-	for(i = inicio; i <= fim; i++){
-		if(j > meio)
-			aux[l++] = vetor[k++];
-		else if(k > fim)
-			aux[l++] = vetor[j++];
-		else if(strcmp(vetor[j]->nome, vetor[k]->nome) < 0)
-			aux[l++] = vetor[j++];
-		else
-			aux[l++] = vetor[k++];
-	}
-
-	for(i = 0; i < l; i++)
-		vetor[inicio++] = aux[j];
-}
-
-void mergeSort(ATLETA **vetor, int inicio, int fim){
-	int meio = (inicio + fim) / 2;
-	if (inicio < fim){
-		mergeSort(vetor, inicio, meio);
-		mergeSort(vetor, meio + 1, fim);
-		merge(vetor, inicio, meio, fim);
-	}
-}
-
-/**
  * Função que cria um ponteiro para a estrutura atleta, já colocando os valores
  * passados por parametro
  * @param  equipe string contendo a equipe do atleta
@@ -118,6 +58,106 @@ void imprimeVetor(ATLETA **vetor, int tamanho){
 }
 
 /**
+ * Função auxiliar para realizar uma troca de dois elemetos de um vetor de
+ * ATLETAS
+ * @param vetor vetor que contém os elementos a serem trocados
+ * @param i     elemento a ser trocado
+ * @param j     elemento a ser trocado
+ */
+void troca(ATLETA **vetor, int i, int j){
+	ATLETA *aux = vetor[i];
+	vetor[i] = vetor[j];
+	vetor[j] = aux;
+}
+
+/**
+ * Função responsável pela volta do merge sort, fase de merge
+ * @param vetor  vetor a ser ordenado
+ * @param inicio indice do inicio do vetor (esquerda)
+ * @param meio   indice do meio do vetor
+ * @param fim    indice do final do vetor
+ * @param opcao  por qual item que será ordenado, pelo “ID” ou pelo “NAME”
+ */
+void merge(ATLETA **vetor, int inicio, int meio, int fim, char *opcao){
+	int i;
+	int j;
+	int k;
+	int n1;
+	int n2;
+
+	n1 = meio - inicio + 1;
+	n2 =  fim - meio;
+
+	// Criando vetores auxiliares
+	ATLETA **auxEsquerda;
+	ATLETA **auxDireita;
+	auxEsquerda = (ATLETA **) malloc(sizeof(ATLETA *) * n1);
+	auxDireita = (ATLETA **) malloc(sizeof(ATLETA *) * n2);
+
+	// Copiando conteúdo do vetor a ser ordenado para os auxiliares
+	for (i = 0; i < n1; i++)
+		auxEsquerda[i] = vetor[inicio + i];
+	for (j = 0; j < n2; j++)
+		auxDireita[j] = vetor[meio + 1+ j];
+
+	// Fase de merge, voltando os vetores auxiliares para o vetor original
+	i = 0;
+	j = 0;
+	k = inicio;
+	while (i < n1 && j < n2){
+		if(!strcmp(opcao, "ID")){
+			if (auxEsquerda[i]->id <= auxDireita[j]->id)
+				vetor[k] = auxEsquerda[i++];
+			else
+				vetor[k] = auxDireita[j++];
+		}
+		else if(!strcmp(opcao, "NAME")){
+			if (strcmp(auxEsquerda[i]->nome, auxDireita[j]->nome) < 1)
+				vetor[k] = auxEsquerda[i++];
+			else
+				vetor[k] = auxDireita[j++];
+		}
+		k++;
+	}
+
+	// Caso de sobras, copia o resto dos elementos restantes no vetor original
+	while (i < n1)
+		vetor[k++] = auxEsquerda[i++];
+	while (j < n2)
+		vetor[k++] = auxDireita[j++];
+
+	// Liberando memória
+	free(auxEsquerda);
+	free(auxDireita);
+}
+
+/**
+ * Função de ordenação pelo método merge sort
+ * @param vetor vetor a ser ordenado
+ * @param inicio      indice inicial (o da esquerda)
+ * @param fim         indice final (o da direita)
+ * @param opcao       opcao de ordenação por “NAME” ou por “ID”
+ * @param maximo      número máximo de merges que o merge sort pode fazer
+ * @param quantidade  quantidade de merges que foram feitos até o momento
+ */
+void mergeSort(ATLETA **vetor, int inicio, int fim, char *opcao, int maximo, int *quantidade){
+	int meio;
+	if (inicio < fim){
+		meio = (inicio + fim) /2;
+
+		// Chamadas recursivas para as duas metades
+		mergeSort(vetor, inicio, meio, opcao, maximo, quantidade);
+		mergeSort(vetor, meio+1, fim, opcao, maximo, quantidade);
+
+		// Verificação da quantidade máxima de merges
+		if(*quantidade <= maximo){
+			merge(vetor, inicio, meio, fim, opcao);
+			(*quantidade)++;
+		}
+	}
+}
+
+/**
  * Função responsável por liberar o conteúdo de um vetor de atletas
  * @param vetor   vetor de atletas
  * @param tamanho tamanho do vetor a ser desalocado
@@ -134,7 +174,8 @@ void liberaAtleta(ATLETA **vetor, int tamanho){
 int main (int argc, char *argv[]){
 	int i = 0;
 	int id;
-	int quantidade;
+	int maximo;
+	int quantidade = 0;
 	char *comparacao;
 	char *linha;
 	char *equipe;
@@ -155,14 +196,10 @@ int main (int argc, char *argv[]){
 	scanf("%s", equipe);
 	while(scanf("%d %[^\n]s", &id, nome) > 0)
 		vetor[i++] = criaAtleta(equipe, id, nome);
-	scanf("%s %d", comparacao, &quantidade);
+	scanf("%s %d", comparacao, &maximo);
 
-/*
-	if(!strcmp(comparacao, "ID"))
-		mergeSort(vetor, 0, i-1, inteiroCMP, &contador);
-	else if(!strcmp(comparacao, "NAME"))
-		mergeSort(vetor, 0, i-1, stringCMP, &contador);
-*/
+	// Faz a “ordenação”
+	mergeSort(vetor, 0, i-1, comparacao, maximo, &quantidade);
 
 	// imprimindo a saída encontrada
 	imprimeVetor(vetor, i);
