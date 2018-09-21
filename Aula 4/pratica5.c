@@ -8,6 +8,12 @@
  * Victor Luiz da Silva Mariano Pereira	8602444
  */
 
+/**
+ * TODO
+ * - mudar a função de merge para quebrar o vetor deixando sempre o vetor da
+ *   direita maior ou igual ao vetor da esquerda
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
