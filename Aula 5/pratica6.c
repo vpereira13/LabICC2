@@ -3,14 +3,59 @@
  *
  * Prof: André Carlos Ponce de Leon Ferreira de Carvalho
  *
- * Aula 4
- * Exercício 1 - Campeonato desordenado
+ * Aula 5
+ * Exercício 1 - Pintura de tela
  * Victor Luiz da Silva Mariano Pereira	8602444
  */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "listaligada.h"
 
+/**
+ * TODO
+ *  - Consertar todos os erros e desalocar toda a memória alocada
+ */
+
+void verificaInsere(Lista *L, char **tela, char tinta, int coordX, int coordY, int xmax, int ymax){
+	Item *I = criaItem(coordX, coordY);
+
+	if(!estaNaLista(L, I))
+		insereFim(L, I);
+	else
+		return;
+
+	// verifica cima, baixo, direita e esquerda se é igual, se for tenta adicionar
+	if(coordX >= 0 && coordX < xmax && coordY >= 0 && coordY < ymax){
+		// cima
+		if(coordY - 1 >=  0 && tela[coordX][coordY - 1] == tinta)
+			verificaInsere(L, tela, tinta, coordX, coordY - 1, xmax, ymax);
+		// baixo
+		if(coordY + 1 < ymax && tela[coordX][coordY + 1] == tinta)
+			verificaInsere(L, tela, tinta, coordX, coordY + 1, xmax, ymax);
+		// direita
+		if(coordX + 1 < xmax && tela[coordX + 1][coordY] == tinta)
+			verificaInsere(L, tela, tinta, coordX + 1, coordY, xmax, ymax);
+		// esquerda
+		if(coordX - 1 >= 0 && tela[coordX - 1][coordY] == tinta)
+			verificaInsere(L, tela, tinta, coordX - 1, coordY, xmax, ymax);
+	}
+}
+
+void preencheLista(Lista *L, char **tela, int coordX, int coordY, int x, int y){
+	char tinta = tela[coordX][coordY];
+	verificaInsere(L, tela, tinta, coordX, coordY, x, y);
+}
+
+void coloreTela(char **tela, Lista *L, char tinta){
+	int i;
+	Item *I;
+
+	for(i = 0; i < tamanhoLista(L); i++){
+		I = naPosicao(L, i);
+		tela[xItem(I)][yItem(I)] = tinta;
+	}
+}
 
 void imprimeTela(char **tela, int x){
 	int i;
@@ -28,6 +73,7 @@ int main (int argc, char *argv[]){
 	char tinta;
 	char lixo;
 	char **tela;
+	Lista *L;
 
 	scanf("%d %d\n", &x, &y);
 
@@ -43,11 +89,29 @@ int main (int argc, char *argv[]){
 		scanf("%c", &lixo);
 	}
 
+	L = criaLista();
+
 	// Recebendo a posição e a tinta a ser preenchida na tela
 	while(scanf("%d %d %c\n", &coordX, &coordY, &tinta) != EOF){
-		// pegar a lista dos adjacentes e fazer a coloração
+		// Cria a lista contendo as posições a serem pintadas
+		preencheLista(L, tela, coordX, coordY, x, y);
+
+		// Colorindo a tela
+		coloreTela(tela, L, tinta);
+
+		// Liberando memória de cada lista criada
+		esvaziaLista(L);
+
+		// Imprime a tela colorida
 		imprimeTela(tela, x);
 	}
+
+	imprimeLista(L);
+
+	// Liberando dados alocados
+	for(i = 0; i < x; i++)
+		free(tela[i]);
+	free(tela);
 
 	return 0;
 }

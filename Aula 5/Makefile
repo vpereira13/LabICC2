@@ -2,7 +2,7 @@
 PROJECT = Aula 5
 
 # Objects
-OBJECTS = pratica6.o
+OBJECTS = pratica6.o listaligada.o
 BIN = pratica6
 
 # Maintainer flags
@@ -20,7 +20,7 @@ all: $(BIN)
 
 # Binary
 $(BIN) : $(OBJECTS)
-	$(CC) $(LD_FLAGS) $(LDFLAGS) $^ -o $@
+	$(CC) $(CPP_FLAGS) $(LD_FLAGS) $(LDFLAGS) $^ -o $@
 
 # Pattern rule for object-source dependences
 %.o : %.c
@@ -46,7 +46,7 @@ zip:
 
 # Memory leak verification
 valgrind:
-	valgrind --leak-check=full --show-leak-kinds=all -v ./$(BIN)
+	valgrind --leak-check=full --show-leak-kinds=all ./$(BIN) # -v
 
 # Cleaning
 .PHONY : clean
