@@ -14,7 +14,8 @@
 
 /**
  * TODO
- *  - Consertar todos os erros e desalocar toda a memória alocada
+ *  - Aparentemente não pode usar recursão, implementar o problema de outra
+ *    forma
  */
 
 void verificaInsere(Lista *L, char **tela, char tinta, int coordX, int coordY, int xmax, int ymax){
@@ -22,24 +23,23 @@ void verificaInsere(Lista *L, char **tela, char tinta, int coordX, int coordY, i
 
 	if(!estaNaLista(L, I))
 		insereFim(L, I);
-	else
+	else{
+		free(I);
 		return;
-
-	// verifica cima, baixo, direita e esquerda se é igual, se for tenta adicionar
-	if(coordX >= 0 && coordX < xmax && coordY >= 0 && coordY < ymax){
-		// cima
-		if(coordY - 1 >=  0 && tela[coordX][coordY - 1] == tinta)
-			verificaInsere(L, tela, tinta, coordX, coordY - 1, xmax, ymax);
-		// baixo
-		if(coordY + 1 < ymax && tela[coordX][coordY + 1] == tinta)
-			verificaInsere(L, tela, tinta, coordX, coordY + 1, xmax, ymax);
-		// direita
-		if(coordX + 1 < xmax && tela[coordX + 1][coordY] == tinta)
-			verificaInsere(L, tela, tinta, coordX + 1, coordY, xmax, ymax);
-		// esquerda
-		if(coordX - 1 >= 0 && tela[coordX - 1][coordY] == tinta)
-			verificaInsere(L, tela, tinta, coordX - 1, coordY, xmax, ymax);
 	}
+
+	// cima
+	if(coordY - 1 >=  0 && tela[coordX][coordY - 1] == tinta)
+		verificaInsere(L, tela, tinta, coordX, coordY - 1, xmax, ymax);
+	// baixo
+	if(coordY + 1 < ymax && tela[coordX][coordY + 1] == tinta)
+		verificaInsere(L, tela, tinta, coordX, coordY + 1, xmax, ymax);
+	// direita
+	if(coordX + 1 < xmax && tela[coordX + 1][coordY] == tinta)
+		verificaInsere(L, tela, tinta, coordX + 1, coordY, xmax, ymax);
+	// esquerda
+	if(coordX - 1 >= 0 && tela[coordX - 1][coordY] == tinta)
+		verificaInsere(L, tela, tinta, coordX - 1, coordY, xmax, ymax);
 }
 
 void preencheLista(Lista *L, char **tela, int coordX, int coordY, int x, int y){
@@ -80,12 +80,13 @@ int main (int argc, char *argv[]){
 	// Alocando memória da tela
 	tela = (char **) malloc (sizeof(char *) * x);
 	for(i = 0; i < x; i++)
-		tela[i] = (char *) malloc (sizeof(char) * y);
+		tela[i] = (char *) malloc (sizeof(char) * (y + 1));
 
 	// Recebendo o conteúdo da tela
 	for(i = 0; i < x; i++){
 		for(j = 0; j < y; j++)
 			scanf("%c", &tela[i][j]);
+		tela[i][y] = '\0';
 		scanf("%c", &lixo);
 	}
 
@@ -106,12 +107,11 @@ int main (int argc, char *argv[]){
 		imprimeTela(tela, x);
 	}
 
-	imprimeLista(L);
-
 	// Liberando dados alocados
 	for(i = 0; i < x; i++)
 		free(tela[i]);
 	free(tela);
+	free(L);
 
 	return 0;
 }
