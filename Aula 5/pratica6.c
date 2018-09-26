@@ -14,38 +14,8 @@
 
 /**
  * TODO
- *  - Aparentemente não pode usar recursão, implementar o problema de outra
- *    forma
+ *  - Liberar memória de forma correta, ainda tem vazamento
  */
-
-void verificaInsere(Lista *L, char **tela, char tinta, int coordX, int coordY, int xmax, int ymax){
-	Item *I = criaItem(coordX, coordY);
-
-	if(!estaNaLista(L, I))
-		insereFim(L, I);
-	else{
-		free(I);
-		return;
-	}
-
-	// cima
-	if(coordY - 1 >=  0 && tela[coordX][coordY - 1] == tinta)
-		verificaInsere(L, tela, tinta, coordX, coordY - 1, xmax, ymax);
-	// baixo
-	if(coordY + 1 < ymax && tela[coordX][coordY + 1] == tinta)
-		verificaInsere(L, tela, tinta, coordX, coordY + 1, xmax, ymax);
-	// direita
-	if(coordX + 1 < xmax && tela[coordX + 1][coordY] == tinta)
-		verificaInsere(L, tela, tinta, coordX + 1, coordY, xmax, ymax);
-	// esquerda
-	if(coordX - 1 >= 0 && tela[coordX - 1][coordY] == tinta)
-		verificaInsere(L, tela, tinta, coordX - 1, coordY, xmax, ymax);
-}
-
-void preencheLista(Lista *L, char **tela, int coordX, int coordY, int x, int y){
-	char tinta = tela[coordX][coordY];
-	verificaInsere(L, tela, tinta, coordX, coordY, x, y);
-}
 
 void coloreTela(char **tela, Lista *L, char tinta){
 	int i;
@@ -55,6 +25,48 @@ void coloreTela(char **tela, Lista *L, char tinta){
 		I = naPosicao(L, i);
 		tela[xItem(I)][yItem(I)] = tinta;
 	}
+}
+
+void geraLista(char **tela, char tintaNova, int x, int y, int xmax, int ymax){
+	int X;
+	int Y;
+	Lista *L = criaLista();
+	Item *I = criaItem(x, y);
+	insereInicio(L, I);
+
+	while(tamanhoLista(L)){
+		I = pop(L);
+		X = xItem(I);
+		Y = yItem(I);
+
+		// Cima
+		if(Y - 1 >= 0 && tela[X][Y - 1] == tela[X][Y]){
+			I = criaItem(X, Y - 1);
+			if(!estaNaLista(L, I))
+				insereInicio(L, I);
+		}
+		// Baixo
+		if(Y + 1 < ymax && tela[X][Y + 1] == tela[X][Y]){
+			I = criaItem(X, Y + 1);
+			if(!estaNaLista(L, I))
+				insereInicio(L, I);
+		}
+		// Direita
+		if(X + 1 < xmax && tela[X + 1][Y] == tela[X][Y]){
+			I = criaItem(X + 1, Y);
+			if(!estaNaLista(L, I))
+				insereInicio(L, I);
+		}
+		// Esquerda
+		if(X - 1 >= 0 && tela[X - 1][Y] == tela[X][Y]){
+			I = criaItem(X - 1, Y);
+			if(!estaNaLista(L, I))
+				insereInicio(L, I);
+		}
+		tela[X][Y] = tintaNova;
+	}
+
+	free(L);
 }
 
 void imprimeTela(char **tela, int x){
@@ -73,7 +85,6 @@ int main (int argc, char *argv[]){
 	char tinta;
 	char lixo;
 	char **tela;
-	Lista *L;
 
 	scanf("%d %d\n", &x, &y);
 
@@ -90,18 +101,10 @@ int main (int argc, char *argv[]){
 		scanf("%c", &lixo);
 	}
 
-	L = criaLista();
-
 	// Recebendo a posição e a tinta a ser preenchida na tela
 	while(scanf("%d %d %c\n", &coordX, &coordY, &tinta) != EOF){
-		// Cria a lista contendo as posições a serem pintadas
-		preencheLista(L, tela, coordX, coordY, x, y);
-
-		// Colorindo a tela
-		coloreTela(tela, L, tinta);
-
-		// Liberando memória de cada lista criada
-		esvaziaLista(L);
+		// Cria a lista contendo as posições a serem pintadas e pinta a tela
+		geraLista(tela, tinta, coordX, coordY, x, y);
 
 		// Imprime a tela colorida
 		imprimeTela(tela, x);
@@ -111,7 +114,6 @@ int main (int argc, char *argv[]){
 	for(i = 0; i < x; i++)
 		free(tela[i]);
 	free(tela);
-	free(L);
 
 	return 0;
 }
