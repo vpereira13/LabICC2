@@ -4,7 +4,7 @@
  * Prof: André Carlos Ponce de Leon Ferreira de Carvalho
  *
  * Aula 5
- * Exercício 1 - Campeonato desordenado
+ * Exercício 1 - Pintura de tela
  * Victor Luiz da Silva Mariano Pereira	8602444
  */
 
