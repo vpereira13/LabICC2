@@ -70,6 +70,13 @@ int tamanhoLista(Lista *);
  */
 void esvaziaLista(Lista *);
 
+/**
+ * Função que retira o primeiro elemento da lista e retorna elemento
+ * @param  L    lista a ser retirado o primeiro elemento
+ * @return      primeiro elemento da lista
+ */
+Item *pop(Lista *);
+
 /*
  * CABEÇALHOS DAS FUNÇÕES REFERENTES AOS ITENS
  */

@@ -146,6 +146,27 @@ void esvaziaLista(Lista *L){
 }
 
 /**
+ * Função que retira o primeiro elemento da lista e retorna elemento
+ * @param  L    lista a ser retirado o primeiro elemento
+ * @return      primeiro elemento da lista
+ */
+Item *pop(Lista *L){
+	Item *I;
+	No *N;
+
+	if(L->tamanho){
+		N = L->primeiro;
+		L->primeiro = N->proximo;
+		L->tamanho--;
+		I = criaItem(N->item->X, N->item->Y);
+		free(N->item);
+		free(N);
+	}
+
+	return I;
+}
+
+/**
  * Função que aloca espaço de memória para um item e retorna ele, mas sem
  * conteúdo
  * @return item alocado, mas sem conteúdo
