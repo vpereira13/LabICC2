@@ -140,6 +140,7 @@ void esvaziaLista(Lista *L){
 		N = L->primeiro;
 		L->primeiro = N->proximo;
 		L->tamanho--;
+		N->proximo = NULL;
 		free(N->item);
 		free(N);
 	}
@@ -159,6 +160,7 @@ Item *pop(Lista *L){
 		L->primeiro = N->proximo;
 		L->tamanho--;
 		I = criaItem(N->item->X, N->item->Y);
+		N->proximo = NULL;
 		free(N->item);
 		free(N);
 	}
