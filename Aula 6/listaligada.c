@@ -16,8 +16,9 @@
  * Estrutura de um item, contém a coodenada X e a coordenada Y
  */
 struct item{
-	int X;
-	int Y;
+	int chave;
+	int tempo;
+	No *back;
 };
 
 typedef struct no No;
@@ -28,7 +29,7 @@ typedef struct no No;
  */
 struct no{
 	Item *item;
-	No* proximo;
+	No *proximo;
 };
 
 /*
@@ -36,7 +37,7 @@ struct no{
  */
 struct lista{
 	int tamanho;
-	No* primeiro;
+	No *primeiro;
 };
 
 /**
@@ -98,8 +99,10 @@ void insereFim(Lista *L, Item *I){
 void imprimeLista(Lista *L){
 	int i;
 
-	if(estaVazia(L))
+	if(estaVazia(L)){
+		printf("-1\n");
 		return;
+	}
 
 	No *aux = L->primeiro;
 
@@ -183,7 +186,7 @@ Item *pop(Lista *L){
 		N = L->primeiro;
 		L->primeiro = N->proximo;
 		L->tamanho--;
-		I = criaItem(N->item->X, N->item->Y);
+		I = criaItem(N->item->chave, N->item->tempo, N->item->back);
 		N->proximo = NULL;
 		free(N->item);
 		free(N);
@@ -209,11 +212,12 @@ Item *iniciaItem(){
  * @param  X    valor da coordenada Y
  * @return      item alocado e com conteúdo
  */
-Item *criaItem(int X, int Y){
+Item *criaItem(int chave, int tempo, No *back){
 	Item *I = iniciaItem();
 
-	I->X = X;
-	I->Y = Y;
+	I->chave = chave;
+	I->tempo = tempo;
+	I->back = back;
 
 	return I;
 }
@@ -241,8 +245,8 @@ Item *naPosicao(Lista *L, int indice){
  * @param  I item a ser analisado
  * @return   valor da coordenada X do item
  */
-int xItem(Item *I){
-	return (I->X);
+int chaveItem(Item *I){
+	return (I->chave);
 }
 
 /**
@@ -250,8 +254,8 @@ int xItem(Item *I){
  * @param  I item a ser analisado
  * @return   valor da coordenada Y do item
  */
-int yItem(Item *I){
-	return (I->Y);
+int tempoItem(Item *I){
+	return (I->tempo);
 }
 
 /**
@@ -277,7 +281,7 @@ int estaNaLista(Lista *L, Item *I){
 	No *aux = L->primeiro;
 
 	while(aux != NULL){
-		if(aux->item->X == I->X && aux->item->Y == I->Y){
+		if(aux->item->chave == I->chave && aux->item->tempo == I->tempo && aux->item->back == I->back){
 			return 1;
 		}
 		aux = aux->proximo;

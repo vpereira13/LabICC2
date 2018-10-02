@@ -94,7 +94,7 @@ Item *pop(Lista *);
  * @param  X    valor da coordenada Y
  * @return      item alocado e com conteúdo
  */
-Item *criaItem(int, int);
+Item *criaItem(int, int, No *);
 
 /**
  * Função que retorna um item que está numa dada posição
