@@ -17,6 +17,7 @@
 	Estrutura utilizada
 		Lista ligada com:
 			Chave
+			tempo
 			ponteiro para o “back”
 			e ponteiro para o próximo
  */
