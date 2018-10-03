@@ -37,6 +37,7 @@ struct no{
  */
 struct lista{
 	int tamanho;
+	int tempo;
 	No *primeiro;
 };
 
@@ -49,6 +50,7 @@ Lista *criaLista(){
 	Lista *L = (Lista *) malloc(sizeof(Lista));
 
 	L->tamanho = 0;
+	L->tempo = 0;
 	L->primeiro = NULL;
 
 	return L;
@@ -66,6 +68,7 @@ void insereInicio(Lista *L, Item *I){
 	N->proximo = L->primeiro;
 	L->primeiro = N;
 	L->tamanho++;
+	L->tempo++;
 }
 
 /**
@@ -81,6 +84,7 @@ void insereFim(Lista *L, Item *I){
 	if(!L->tamanho){
 		L->primeiro = N;
 		L->tamanho++;
+		L->tempo++;
 		return;
 	}
 
@@ -90,6 +94,7 @@ void insereFim(Lista *L, Item *I){
 		aux = aux->proximo;
 	aux->proximo = N;
 	L->tamanho++;
+	L->tempo++;
 }
 
 /**
@@ -132,6 +137,10 @@ int tamanhoLista(Lista *L){
 	return (L->tamanho);
 }
 
+int tempoLista(Lista *L){
+	return (L->tempo);
+}
+
 /**
  * Função responsável por esvaziar a lista, liberando toda a memória alocada
  * @param L lista a ser esvaziada
@@ -167,6 +176,7 @@ void removeItem(Lista *L, int indice){
 			N = N->proximo;
 		}
 		L->tamanho--;
+		L->tempo++;
 		Nanterior->proximo = N->proximo;
 		free(N->item);
 		free(N);
@@ -186,6 +196,7 @@ Item *pop(Lista *L){
 		N = L->primeiro;
 		L->primeiro = N->proximo;
 		L->tamanho--;
+		L->tempo++;
 		I = criaItem(N->item->chave, N->item->tempo, N->item->back);
 		N->proximo = NULL;
 		free(N->item);
