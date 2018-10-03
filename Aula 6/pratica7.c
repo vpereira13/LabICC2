@@ -17,7 +17,7 @@
 	Estrutura utilizada
 		Lista ligada com:
 			Chave
-			tempo
+			tempo (pegar da lista)
 			ponteiro para o “back”
 			e ponteiro para o próximo
  */
@@ -32,15 +32,21 @@ int main (int argc, char *argv[]){
 	// Coletando entrada
 	while(scanf("%c %d %d\n", &operacao, &n, &back) > 1 && operacao != 'f'){
 		if(operacao == 'i'){
-			I = criaItem(n, back);
+			// Caso de inserção
+			I = criaItem(n, back, NULL);
 			insereFim(L, I);
 			imprimeLista(L);
 		}
-		else if(operacao == 'r')
+		else if(operacao == 'r'){
+			// Caso de remoção
 			removeItem(L, n);
+		}
 	}
 
+	// Imprimindo
 	imprimeLista(L);
+
+	// Liberando memória
 	esvaziaLista(L);
 	free(L);
 
