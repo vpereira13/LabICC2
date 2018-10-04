@@ -6,7 +6,7 @@ OBJECTS = pratica7.o listaligada.o
 BIN = pratica7
 
 # Maintainer flags
-CPP_FLAGS = -I. -g
+CPP_FLAGS = -I.
 C_FLAGS = -Wall -Werror
 LD_FLAGS = -lm
 CC = gcc
@@ -46,7 +46,7 @@ zip:
 
 # Memory leak verification
 valgrind:
-	valgrind --leak-check=full --show-leak-kinds=all -v ./$(BIN)
+	valgrind --leak-check=full --show-leak-kinds=all ./$(BIN)
 
 # Cleaning
 .PHONY : clean
