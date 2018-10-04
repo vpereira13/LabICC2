@@ -12,19 +12,8 @@
 #include <stdlib.h>
 #include "listaligada.h"
 
-
-/*
-	Estrutura utilizada
-		Lista ligada com:
-			Chave
-			tempo (pegar da lista)
-			ponteiro para o “back”
-			e ponteiro para o próximo
- */
-
 void criaEInsere(Lista *L, int n, int back){
 	Item *I = criaItem(n, tempoLista(L));
-
 	insereFim(L, I);
 }
 
@@ -36,14 +25,12 @@ int main (int argc, char *argv[]){
 
 	// Coletando entrada
 	while(scanf("%c %d %d\n", &operacao, &n, &back) > 1 && operacao != 'f'){
-		if(operacao == 'i'){
+		if(operacao == 'i')
+			// Caso de inserção
 			criaEInsere(L, n, back);
-			imprimeLista(L);
-		}
-		else if(operacao == 'r'){
+		else if(operacao == 'r')
 			// Caso de remoção
 			removeItem(L, n);
-		}
 	}
 
 	// Imprimindo
