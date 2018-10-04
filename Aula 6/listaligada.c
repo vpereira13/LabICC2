@@ -18,7 +18,7 @@
 struct item{
 	int chave;
 	int tempo;
-	No *back;
+	int indiceBack;
 };
 
 typedef struct no No;
@@ -113,6 +113,8 @@ void imprimeLista(Lista *L){
 
 	for(i = 0; i < L->tamanho; i++){
 		imprimeItem(aux->item);
+		if(i != L->tamanho - 1)
+			printf(" ");
 		aux = aux->proximo;
 	}
 
@@ -163,7 +165,7 @@ void esvaziaLista(Lista *L){
  * @param L      lista que terá o item removido
  * @param indice índice do item a ser removido
  */
-void removeItem(Lista *L, int indice){
+void removeIndice(Lista *L, int indice){
 	int i;
 	No *N = NULL;
 	No *Nanterior = NULL;
@@ -184,26 +186,45 @@ void removeItem(Lista *L, int indice){
 }
 
 /**
- * Função que retira o primeiro elemento da lista e retorna elemento
- * @param  L    lista a ser retirado o primeiro elemento
- * @return      primeiro elemento da lista
+ * Função que remove o item que tem uma chave igual a chave dada
+ * @param L      lista que terá o item removido
+ * @param chave índice do item a ser removido
  */
-Item *pop(Lista *L){
-	Item *I;
-	No *N;
+void removeItem(Lista *L, int chave){
+	int i;
+	int tamanho = tamanhoLista(L);
+	No *N = NULL;
+	No *Nanterior = NULL;
 
-	if(L->tamanho){
-		N = L->primeiro;
+	N = L->primeiro;
+	Nanterior = L->primeiro;
+
+	// Caso primeiro elemento
+	if(chaveItem(N->item) == chave){
 		L->primeiro = N->proximo;
 		L->tamanho--;
 		L->tempo++;
-		I = criaItem(N->item->chave, N->item->tempo, N->item->back);
-		N->proximo = NULL;
 		free(N->item);
 		free(N);
+		return;
 	}
 
-	return I;
+	// Caso contrário, procura no resto
+	for(i = 0; i < tamanho; i++){
+		if(chaveItem(N->item) == chave){
+			Nanterior->proximo = N->proximo;
+			L->tamanho--;
+			L->tempo++;
+			free(N->item);
+			free(N);
+			return;
+		}
+		else{
+			Nanterior = N;
+			N = N->proximo;
+		}
+	}
+	return;
 }
 
 /**
@@ -223,12 +244,11 @@ Item *iniciaItem(){
  * @param  X    valor da coordenada Y
  * @return      item alocado e com conteúdo
  */
-Item *criaItem(int chave, int tempo, No *back){
+Item *criaItem(int chave, int tempo){
 	Item *I = iniciaItem();
 
 	I->chave = chave;
 	I->tempo = tempo;
-	I->back = back;
 
 	return I;
 }
@@ -274,10 +294,10 @@ int tempoItem(Item *I){
  * @param I    item a ser impresso
  */
 void imprimeItem(Item *I){
-	int X = xItem(I);
-	int Y = yItem(I);
+	int chave = chaveItem(I);
+	int tempo = tempoItem(I);
 
-	printf("X: %d\tY: %d\n", X, Y);
+	printf("[%d,%d]", chave, tempo);
 }
 
 /**
@@ -292,7 +312,7 @@ int estaNaLista(Lista *L, Item *I){
 	No *aux = L->primeiro;
 
 	while(aux != NULL){
-		if(aux->item->chave == I->chave && aux->item->tempo == I->tempo && aux->item->back == I->back){
+		if(aux->item->chave == I->chave && aux->item->tempo == I->tempo){
 			return 1;
 		}
 		aux = aux->proximo;

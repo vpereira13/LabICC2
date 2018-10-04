@@ -75,6 +75,8 @@ void esvaziaLista(Lista *);
  * @param L      lista que terá o item removido
  * @param indice índice do item a ser removido
  */
+void removeIndice(Lista *, int);
+
 void removeItem(Lista *, int);
 
 /**
@@ -83,6 +85,8 @@ void removeItem(Lista *, int);
  * @return      primeiro elemento da lista
  */
 Item *pop(Lista *);
+
+int tempoLista(Lista *);
 
 /*
  * CABEÇALHOS DAS FUNÇÕES REFERENTES AOS ITENS
@@ -94,7 +98,7 @@ Item *pop(Lista *);
  * @param  X    valor da coordenada Y
  * @return      item alocado e com conteúdo
  */
-Item *criaItem(int, int, No *);
+Item *criaItem(int, int);
 
 /**
  * Função que retorna um item que está numa dada posição
@@ -109,14 +113,14 @@ Item *naPosicao(Lista *, int);
  * @param  I item a ser analisado
  * @return   valor da coordenada X do item
  */
-int xItem(Item *);
+int chaveItem(Item *);
 
 /**
  * Função que retorna o valor da coordenada Y de um item
  * @param  I item a ser analisado
  * @return   valor da coordenada Y do item
  */
-int yItem(Item *);
+int tempoItem(Item *);
 
 /**
  * Função que imprime um dado do tipo item
