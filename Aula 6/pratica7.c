@@ -22,19 +22,22 @@
 			e ponteiro para o próximo
  */
 
+void criaEInsere(Lista *L, int n, int back){
+	Item *I = criaItem(n, tempoLista(L));
+
+	insereFim(L, I);
+}
+
 int main (int argc, char *argv[]){
 	int n;
 	int back;
 	char operacao;
 	Lista *L = criaLista();
-	Item *I = NULL;
 
 	// Coletando entrada
 	while(scanf("%c %d %d\n", &operacao, &n, &back) > 1 && operacao != 'f'){
 		if(operacao == 'i'){
-			// Caso de inserção
-			I = criaItem(n, back, NULL);
-			insereFim(L, I);
+			criaEInsere(L, n, back);
 			imprimeLista(L);
 		}
 		else if(operacao == 'r'){
