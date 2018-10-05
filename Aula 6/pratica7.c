@@ -12,6 +12,10 @@
 #include <stdlib.h>
 #include "listaligada.h"
 
+/**
+ * Ainda falta fazer a parte do back funcionar corretamente
+ */
+
 int main (int argc, char *argv[]){
 	int n;
 	int back;
