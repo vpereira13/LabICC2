@@ -100,6 +100,8 @@ int tempoLista(Lista *);
  */
 Item *criaItem(int, int);
 
+void criaEInsere(Lista *, int, int);
+
 /**
  * Função que retorna um item que está numa dada posição
  * @param  L      lista a ser analisada

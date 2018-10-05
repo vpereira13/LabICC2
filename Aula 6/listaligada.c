@@ -19,6 +19,7 @@ struct item{
 	int chave;
 	int tempo;
 	int indiceBack;
+	No* back;
 };
 
 typedef struct no No;
@@ -249,8 +250,28 @@ Item *criaItem(int chave, int tempo){
 
 	I->chave = chave;
 	I->tempo = tempo;
+	I->indiceBack = -1;
+	I->back = NULL;
 
 	return I;
+}
+
+void criaEInsere(Lista *L, int n, int back){
+	int i;
+	int tamanho = tamanhoLista(L);
+	Item *I = criaItem(n, tempoLista(L));
+	No *N = (No *) malloc (sizeof(No));
+
+	// Caso possível linkar
+	if(back && back <= tamanho){
+		N = L->primeiro;
+		for(i = 0; i < tamanho; i++)
+			N = N->proximo;
+		I->back = N;
+		I->indiceBack = tamanho - back;
+	}
+
+	insereFim(L, I);
 }
 
 /**
@@ -289,6 +310,10 @@ int tempoItem(Item *I){
 	return (I->tempo);
 }
 
+int indiceItem(Item *I){
+	return (I->indiceBack);
+}
+
 /**
  * Função que imprime um dado do tipo item
  * @param I    item a ser impresso
@@ -296,8 +321,12 @@ int tempoItem(Item *I){
 void imprimeItem(Item *I){
 	int chave = chaveItem(I);
 	int tempo = tempoItem(I);
+	int indiceBack = indiceItem(I);
 
-	printf("[%d,%d]", chave, tempo);
+	if(indiceBack >= 0 && I->back != NULL)
+		printf("[%d,%d,%d]", chave, tempo, indiceBack);
+	else
+		printf("[%d,%d]", chave, tempo);
 }
 
 /**
