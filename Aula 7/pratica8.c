@@ -4,7 +4,7 @@
  * Prof: André Carlos Ponce de Leon Ferreira de Carvalho
  *
  * Aula 7
- * Exercício 1 -
+ * Exercício 1 - Operações na ordenação
  * Victor Luiz da Silva Mariano Pereira	8602444
  */
 
