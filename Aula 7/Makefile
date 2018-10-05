@@ -1,5 +1,5 @@
 # Name
-PROJECT = Aula 5
+PROJECT = Aula 7
 
 # Objects
 OBJECTS = pratica8.o
