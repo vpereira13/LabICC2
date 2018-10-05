@@ -13,9 +13,9 @@
 
 #define IS "INSERTIONSORT"
 #define BS "BUBBLESORT"
-#define QS "QUICKSORT"
-#define HS "HEAPSORT"
 #define MS "MERGESORT"
+#define HS "HEAPSORT"
+#define QS "QUICKSORT"
 
 int main (int argc, char *argv[]){
 	int i;
@@ -47,6 +47,11 @@ int main (int argc, char *argv[]){
 	 * 	Heap sort
 	 * 	Bubble sort
 	 */
+
+//	printf("Menor C: %s\n",);
+//	printf("Maior C: %s\n",);
+//	printf("Menor M: %s\n",);
+//	printf("Maior M: %s\n",);
 
 	// Liberando memória
 	for(i = 0; i < nAlgoritmos; i++)
