@@ -12,11 +12,6 @@
 #include <stdlib.h>
 #include "listaligada.h"
 
-void criaEInsere(Lista *L, int n, int back){
-	Item *I = criaItem(n, tempoLista(L));
-	insereFim(L, I);
-}
-
 int main (int argc, char *argv[]){
 	int n;
 	int back;
