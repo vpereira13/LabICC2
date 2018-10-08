@@ -33,6 +33,35 @@ int *copia(int *origem, int tamanho){
 	return destino;
 }
 
+/**
+ * Função auxiliar para trocar dois valores de um vetor
+ * @param vetor vetor a ter os trocados
+ * @param a     índice do primeiro valor
+ * @param b     índice do segundo valor
+ */
+void troca(int *vetor, int a, int b){
+	int temp;
+
+	temp = vetor[a];
+	vetor[a] = vetor[b];
+	vetor[b] = temp;
+}
+
+/**
+ * Função de ordenação no estilo de bolha
+ * @param vetor   vetor a ser ordenado
+ * @param tamanho tamanho do vetor
+ */
+void bubbleSort(int *vetor, int tamanho){
+	int i;
+	int j;
+
+	for(i = 0; i < tamanho; i++)
+		for(j = i+1; j < tamanho; j++)
+			if(vetor[j] < vetor[i])
+				troca(vetor, i, j);
+}
+
 int main (int argc, char *argv[]){
 	int i;
 	int n;
