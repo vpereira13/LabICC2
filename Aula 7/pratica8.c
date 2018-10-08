@@ -17,6 +17,23 @@
 #define HS "HEAPSORT"
 #define QS "QUICKSORT"
 
+/**
+ * Função que copia o conteúdo de um vetor de inteiros para outro vetor de
+ * inteiros
+ * @param  origem  vetor de inteiros de origem
+ * @param  tamanho tamanho do vetor de origem
+ * @return         cópia do vetor de origem
+ */
+int *copia(int *origem, int tamanho){
+	int i;
+	int *destino = (int *) malloc (sizeof(int) * tamanho);
+
+	for(i = 0; i < tamanho; i++)
+		destino[i] = origem[i];
+
+	return destino;
+}
+
 int main (int argc, char *argv[]){
 	int i;
 	int n;
