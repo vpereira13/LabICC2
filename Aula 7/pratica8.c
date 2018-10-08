@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define IS "INSERTIONSORT"
 #define BS "BUBBLESORT"
@@ -19,17 +20,15 @@
 
 /**
  * Função que copia o conteúdo de um vetor de inteiros para outro vetor de
- * inteiros
+ * inteiros, utilizando a ‘memcpy’ para melhor desempenho
  * @param  origem  vetor de inteiros de origem
  * @param  tamanho tamanho do vetor de origem
  * @return         cópia do vetor de origem
  */
 int *copia(int *origem, int tamanho){
-	int i;
 	int *destino = (int *) malloc (sizeof(int) * tamanho);
 
-	for(i = 0; i < tamanho; i++)
-		destino[i] = origem[i];
+	memcpy(destino, origem, tamanho * sizeof(int));
 
 	return destino;
 }
