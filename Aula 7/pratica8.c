@@ -108,10 +108,8 @@ int main (int argc, char *argv[]){
 	/**
 	 * Implementar
 	 * 	Merge sort
-	 * 	Insertion sort
 	 * 	Quick sort
 	 * 	Heap sort
-	 * 	Bubble sort
 	 */
 
 //	printf("Menor C: %s\n",);
