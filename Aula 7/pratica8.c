@@ -83,6 +83,45 @@ void insertionSort(int *vetor, int tamanho){
 	}
 }
 
+/**
+ * Função auxiliar do quickSort(), que dado um vetor de inteiros, pega o ultimo
+ * elemento como pivo e coloca ele no lugar correto do vetor. Além disso, a
+ * função deixa os inteiros maiores que o pivo a direita dele e os menores
+ * a esquerda
+ * @param  vetor    vetor de inteiros a ser ordenado
+ * @param  inicio   índice do início do vetor
+ * @param  fim      índice do último elemento do vetor
+ * @return          índice do inteiro que foi colocado no lugar certo
+ */
+int particao(int *vetor, int inicio, int fim){
+	int i = (inicio - 1);
+	int j;
+	int pivo = vetor[fim];
+
+	for (j = inicio; j <= fim - 1; j++)
+		if (vetor[j] < pivo){
+			i++;
+			troca(vetor, i, j);
+		}
+	troca(vetor, i + 1, fim);
+	return (i + 1);
+}
+
+/**
+ * Função de ordenação  de inteiros quicksort
+ * @param vetor    vetor de palavras
+ * @param inicio   índice do início do vetor
+ * @param fim      índice do fim do vetor
+ */
+void quickSort(int *vetor, int inicio, int fim){
+	int i;
+	if (inicio < fim){
+		i = particao(vetor, inicio, fim);
+		quickSort(vetor, inicio, i - 1);
+		quickSort(vetor, i + 1, fim);
+	}
+}
+
 int main (int argc, char *argv[]){
 	int i;
 	int n;
