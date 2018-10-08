@@ -84,6 +84,78 @@ void insertionSort(int *vetor, int tamanho){
 }
 
 /**
+ * Função responsável pela volta do merge sort, fase de merge
+ * @param vetor  vetor a ser ordenado
+ * @param inicio indice do inicio do vetor (esquerda)
+ * @param meio   indice do meio do vetor
+ * @param fim    indice do final do vetor
+ */
+void merge(int *vetor, int inicio, int meio, int fim){
+	int i;
+	int j;
+	int k;
+	int n1;
+	int n2;
+
+	n1 = meio - inicio + 1;
+	n2 =  fim - meio;
+
+	// Criando vetores auxiliares
+	int *auxEsquerda;
+	int *auxDireita;
+	auxEsquerda = (int *) malloc(sizeof(int) * n1);
+	auxDireita = (int *) malloc(sizeof(int) * n2);
+
+	// Copiando conteúdo do vetor a ser ordenado para os auxiliares
+	for (i = 0; i < n1; i++)
+		auxEsquerda[i] = vetor[inicio + i];
+	for (j = 0; j < n2; j++)
+		auxDireita[j] = vetor[meio + 1+ j];
+
+	// Fase de merge, voltando os vetores auxiliares para o vetor original
+	i = 0;
+	j = 0;
+	k = inicio;
+	while (i < n1 && j < n2){
+		if (auxEsquerda[i] <= auxDireita[j])
+			vetor[k] = auxEsquerda[i++];
+		else
+			vetor[k] = auxDireita[j++];
+		k++;
+	}
+
+	// Caso de sobras, copia o resto dos elementos restantes no vetor original
+	while (i < n1)
+		vetor[k++] = auxEsquerda[i++];
+	while (j < n2)
+		vetor[k++] = auxDireita[j++];
+
+	// Liberando memória
+	free(auxEsquerda);
+	free(auxDireita);
+}
+
+/**
+ * Função de ordenação pelo método merge sort
+ * @param vetor       vetor a ser ordenado
+ * @param inicio      indice inicial (o da esquerda)
+ * @param fim         indice final (o da direita)
+ */
+void mergeSort(int *vetor, int inicio, int fim){
+	int meio;
+	if (inicio < fim){
+		meio = (inicio + fim) /2;
+
+		// Chamadas recursivas para as duas metades
+		mergeSort(vetor, inicio, meio);
+		mergeSort(vetor, meio+1, fim);
+
+		// Verificação da quantidade máxima de merges
+		merge(vetor, inicio, meio, fim);
+	}
+}
+
+/**
  * Função auxiliar do quickSort(), que dado um vetor de inteiros, pega o ultimo
  * elemento como pivo e coloca ele no lugar correto do vetor. Além disso, a
  * função deixa os inteiros maiores que o pivo a direita dele e os menores
@@ -147,7 +219,6 @@ int main (int argc, char *argv[]){
 	/**
 	 * Implementar
 	 * 	Merge sort
-	 * 	Quick sort
 	 * 	Heap sort
 	 */
 
