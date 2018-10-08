@@ -62,6 +62,27 @@ void bubbleSort(int *vetor, int tamanho){
 				troca(vetor, i, j);
 }
 
+/**
+ * Função de ordenação no estilo de inserção
+ * @param vetor   vetor a ser ordenado
+ * @param tamanho tamanho do vetor
+ */
+void insertionSort(int *vetor, int tamanho){
+	int i;
+	int j;
+	int atual;
+
+	for(i = 1; i < tamanho; i++){
+		atual = vetor[i];
+		j = i - 1;
+		while(j > -1 && vetor[j] > atual){
+			vetor[j + 1] = vetor[j];
+			j--;
+		}
+		vetor[j+1] = atual;
+	}
+}
+
 int main (int argc, char *argv[]){
 	int i;
 	int n;
