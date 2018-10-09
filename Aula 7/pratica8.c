@@ -186,7 +186,7 @@ void mergeSort(int *vetor, int inicio, int fim, int *c, int *m){
 int particao(int *vetor, int inicio, int fim, int *c, int *m){
 	int i = (inicio - 1);
 	int j;
-	int pivo = vetor[fim];
+	int pivo = vetor[(inicio + fim) / 2];
 
 	for (j = inicio; j <= fim - 1; j++){
 		(*c)++; // Uma comparação por if
