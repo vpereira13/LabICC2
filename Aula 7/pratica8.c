@@ -333,6 +333,7 @@ int main (int argc, char *argv[]){
 	for(i = 0; i < n; i++)
 		scanf("%d\n", &dados[i]);
 
+	// Parte de execução dos algoritmos
 	for(i = 0; i < nAlgoritmos; i++){
 		clone = copia(dados, n);
 		if(!strcmp(algoritmos[i], IS)){
