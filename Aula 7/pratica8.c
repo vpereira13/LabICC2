@@ -121,10 +121,14 @@ void merge(int *vetor, int inicio, int meio, int fim, int *c, int *m){
 	auxDireita = (int *) malloc(sizeof(int) * n2);
 
 	// Copiando conteúdo do vetor a ser ordenado para os auxiliares
-	for (i = 0; i < n1; i++)
+	for (i = 0; i < n1; i++){
 		auxEsquerda[i] = vetor[inicio + i];
-	for (j = 0; j < n2; j++)
-		auxDireita[j] = vetor[meio + 1+ j];
+		(*m)++; // Ao criar os vetores auxiliares incrementa a movimentação
+	}
+	for (j = 0; j < n2; j++){
+		auxDireita[j] = vetor[meio + 1 + j];
+		(*m)++; // Ao criar os vetores auxiliares incrementa a movimentação
+	}
 
 	// Fase de merge, voltando os vetores auxiliares para o vetor original
 	i = 0;
@@ -166,7 +170,7 @@ void merge(int *vetor, int inicio, int meio, int fim, int *c, int *m){
 void mergeSort(int *vetor, int inicio, int fim, int *c, int *m){
 	int meio;
 	if (inicio < fim){
-		meio = (inicio + fim) /2;
+		meio = (inicio + fim) / 2;
 
 		// Chamadas recursivas para as duas metades
 		mergeSort(vetor, inicio, meio, c, m);
