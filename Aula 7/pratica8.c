@@ -61,7 +61,7 @@ void bubbleSort(int *vetor, int tamanho, int *c, int *m){
 
 	for(i = 0; i < tamanho; i++)
 		for(j = i+1; j < tamanho; j++){
-			(*c)++; // Uma comparação por interação do for
+			(*c)++; // Uma comparação por iteração do for
 			if(vetor[j] < vetor[i]){
 				troca(vetor, i, j);
 				*m += 2; // A cada troca adiciona 2 movimentações
@@ -136,15 +136,19 @@ void merge(int *vetor, int inicio, int meio, int fim, int *c, int *m){
 			vetor[k] = auxEsquerda[i++];
 		else
 			vetor[k] = auxDireita[j++];
-		(*m)++; // Uma movimentação por interação do while
+		(*m)++; // Uma movimentação por iteração do while
 		k++;
 	}
 
 	// Caso de sobras, copia o resto dos elementos restantes no vetor original
-	while (i < n1)
+	while (i < n1){
 		vetor[k++] = auxEsquerda[i++];
-	while (j < n2)
+		(*m)++; // Uma movimentação por iteração do while
+	}
+	while (j < n2){
 		vetor[k++] = auxDireita[j++];
+		(*m)++; // Uma movimentação por iteração do while
+	}
 
 	// Liberando memória
 	free(auxEsquerda);
