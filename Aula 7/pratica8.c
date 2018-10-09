@@ -194,6 +194,53 @@ void quickSort(int *vetor, int inicio, int fim){
 	}
 }
 
+/**
+ * Função auxiliar que constroi uma heap
+ * @param vetor   vetor que será gerada a heap
+ * @param tamanho tamanho do vetor
+ * @param raiz    índice da raiz
+ */
+void constroiHeap(int *vetor, int tamanho, int raiz){
+	int maior = raiz;
+	int esquerda = 2 * raiz + 1;
+	int direita = 2 * raiz + 2;
+
+	// Se o filho da esquerda é maior que a raiz
+	if (esquerda < tamanho && vetor[esquerda] > vetor[maior])
+		maior = esquerda;
+
+	// Se o filho da direita é maior que o maior
+	if (direita < tamanho && vetor[direita] > vetor[maior])
+		maior = direita;
+
+	// Caso o maior não for a raiz
+	if (maior != raiz){
+		troca(vetor, raiz, maior);
+
+		// Reconstroi a heap
+		constroiHeap(vetor, tamanho, maior);
+	}
+}
+
+/**
+ * Função para ordenar um vetor de inteiros usando o método de heap sort
+ * @param vetor   vetor a ser ordenado
+ * @param tamanho tamanho do vetor
+ */
+void heapSort(int *vetor, int tamanho){
+	int i;
+	// Fazendo a heap
+	for (i = (tamanho / 2) - 1; i > -1; i--)
+		constroiHeap(vetor, tamanho, i);
+
+	for (i = tamanho - 1; i > -1; i--){
+		troca(vetor, 0, i);
+
+		// Faz a heap com o resto
+		constroiHeap(vetor, i, 0);
+	}
+}
+
 int main (int argc, char *argv[]){
 	int i;
 	int n;
@@ -215,12 +262,6 @@ int main (int argc, char *argv[]){
 
 	for(i = 0; i < n; i++)
 		scanf("%d\n", &dados[i]);
-
-	/**
-	 * Implementar
-	 * 	Merge sort
-	 * 	Heap sort
-	 */
 
 //	printf("Menor C: %s\n",);
 //	printf("Maior C: %s\n",);
