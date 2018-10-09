@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
 
 #define IS "INSERTIONSORT"
 #define BS "BUBBLESORT"
@@ -51,8 +52,10 @@ void troca(int *vetor, int a, int b){
  * Função de ordenação no estilo de bolha
  * @param vetor   vetor a ser ordenado
  * @param tamanho tamanho do vetor
+ * @param c       número de comparações no vetor
+ * @param m       número de movimentações no vetor
  */
-void bubbleSort(int *vetor, int tamanho){
+void bubbleSort(int *vetor, int tamanho, int *c, int *m){
 	int i;
 	int j;
 
@@ -66,8 +69,10 @@ void bubbleSort(int *vetor, int tamanho){
  * Função de ordenação no estilo de inserção
  * @param vetor   vetor a ser ordenado
  * @param tamanho tamanho do vetor
+ * @param c       número de comparações no vetor
+ * @param m       número de movimentações no vetor
  */
-void insertionSort(int *vetor, int tamanho){
+void insertionSort(int *vetor, int tamanho, int *c, int *m){
 	int i;
 	int j;
 	int atual;
@@ -140,15 +145,17 @@ void merge(int *vetor, int inicio, int meio, int fim){
  * @param vetor       vetor a ser ordenado
  * @param inicio      indice inicial (o da esquerda)
  * @param fim         indice final (o da direita)
+ * @param c           número de comparações no vetor
+ * @param m           número de movimentações no vetor
  */
-void mergeSort(int *vetor, int inicio, int fim){
+void mergeSort(int *vetor, int inicio, int fim, int *c, int *m){
 	int meio;
 	if (inicio < fim){
 		meio = (inicio + fim) /2;
 
 		// Chamadas recursivas para as duas metades
-		mergeSort(vetor, inicio, meio);
-		mergeSort(vetor, meio+1, fim);
+		mergeSort(vetor, inicio, meio, c, m);
+		mergeSort(vetor, meio+1, fim, c, m);
 
 		// Verificação da quantidade máxima de merges
 		merge(vetor, inicio, meio, fim);
@@ -184,13 +191,15 @@ int particao(int *vetor, int inicio, int fim){
  * @param vetor    vetor de palavras
  * @param inicio   índice do início do vetor
  * @param fim      índice do fim do vetor
+ * @param c        número de comparações no vetor
+ * @param m        número de movimentações no vetor
  */
-void quickSort(int *vetor, int inicio, int fim){
+void quickSort(int *vetor, int inicio, int fim, int *c, int *m){
 	int i;
 	if (inicio < fim){
 		i = particao(vetor, inicio, fim);
-		quickSort(vetor, inicio, i - 1);
-		quickSort(vetor, i + 1, fim);
+		quickSort(vetor, inicio, i - 1, c, m);
+		quickSort(vetor, i + 1, fim, c, m);
 	}
 }
 
@@ -226,8 +235,10 @@ void constroiHeap(int *vetor, int tamanho, int raiz){
  * Função para ordenar um vetor de inteiros usando o método de heap sort
  * @param vetor   vetor a ser ordenado
  * @param tamanho tamanho do vetor
+ * @param c       número de comparações no vetor
+ * @param m       número de movimentações no vetor
  */
-void heapSort(int *vetor, int tamanho){
+void heapSort(int *vetor, int tamanho, int *c, int *m){
 	int i;
 	// Fazendo a heap
 	for (i = (tamanho / 2) - 1; i > -1; i--)
@@ -241,12 +252,71 @@ void heapSort(int *vetor, int tamanho){
 	}
 }
 
+/**
+ * Estrutura do tipo MEDIDA que vai conter os valores de menor, maior e seus
+ * respectivos índices.
+ */
+typedef struct medida{
+	int menor;
+	int maior;
+	int indiceMenor;
+	int indiceMaior;
+}MEDIDA;
+
+/**
+ * Função para atualizar os itens de comparações e movimentações
+ * @param C      item do tipo MEDIDA de comparações
+ * @param M      item do tipo MEDIDA de movimentações
+ * @param c      número de comparações
+ * @param m      número de movimentações
+ * @param indice índice do algoritmo que fez foi o menor ou maior
+ */
+void verifica(MEDIDA *C, MEDIDA *M, int c, int m, int indice){
+	if(c > C->maior){
+		C->maior = c;
+		C->indiceMaior = indice;
+	}
+	if(c < C->menor){
+		C-> menor = c;
+		C->indiceMenor = indice;
+	}
+	if(m > M->maior){
+		M->maior = m;
+		M->indiceMaior = indice;
+	}
+	if(m < M->menor){
+		M-> menor = m;
+		M->indiceMenor = indice;
+	}
+}
+
+/**
+ * Função para iniciar um elemento do tipo MEDIDA, que conterá os itens de
+ * comparação de de chaves e movimentações de chaves
+ * @return ponteiro para um item MEDIDA
+ */
+MEDIDA *iniciaMedida(){
+	MEDIDA *M = (MEDIDA *) malloc(sizeof(MEDIDA));
+
+	M->menor = INT_MAX;
+	M->maior = INT_MIN;
+	M->indiceMenor = -1;
+	M->indiceMaior = -1;
+
+	return M;
+}
+
 int main (int argc, char *argv[]){
 	int i;
 	int n;
+	int c;
+	int m;
 	int nAlgoritmos;
 	int *dados = NULL;
+	int *clone = NULL;
 	char **algoritmos = NULL;
+	MEDIDA *C = iniciaMedida();
+	MEDIDA *M = iniciaMedida();
 
 	// Parte de coleta de dados
 	scanf("%d %d", &nAlgoritmos, &n);
@@ -263,16 +333,45 @@ int main (int argc, char *argv[]){
 	for(i = 0; i < n; i++)
 		scanf("%d\n", &dados[i]);
 
-//	printf("Menor C: %s\n",);
-//	printf("Maior C: %s\n",);
-//	printf("Menor M: %s\n",);
-//	printf("Maior M: %s\n",);
+	for(i = 0; i < nAlgoritmos; i++){
+		clone = copia(dados, n);
+		if(!strcmp(algoritmos[i], IS)){
+			insertionSort(clone, n, &c, &m);
+			verifica(C, M, c, m, i);
+		}
+		else if(!strcmp(algoritmos[i] , BS)){
+			bubbleSort(clone, n, &c, &m);
+			verifica(C, M, c, m, i);
+		}
+		else if(!strcmp(algoritmos[i], MS)){
+			mergeSort(clone, 0, n-1, &c, &m);
+			verifica(C, M, c, m, i);
+		}
+		else if(!strcmp(algoritmos[i], HS)){
+			heapSort(clone, n, &c, &m);
+			verifica(C, M, c, m, i);
+		}
+		else if(!strcmp(algoritmos[i], QS)){
+			quickSort(clone, 0, n-1, &c, &m);
+			verifica(C, M, c, m, i);
+		}
+
+		// Liberando memória
+		free(clone);
+	}
+
+	printf("Menor C: %s\n", algoritmos[C->indiceMenor]);
+	printf("Maior C: %s\n", algoritmos[C->indiceMaior]);
+	printf("Menor M: %s\n", algoritmos[M->indiceMenor]);
+	printf("Maior M: %s\n", algoritmos[M->indiceMaior]);
 
 	// Liberando memória
 	for(i = 0; i < nAlgoritmos; i++)
 		free(algoritmos[i]);
 	free(algoritmos);
 	free(dados);
+	free(C);
+	free(M);
 
 	return 0;
 }
