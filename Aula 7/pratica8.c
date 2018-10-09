@@ -60,9 +60,13 @@ void bubbleSort(int *vetor, int tamanho, int *c, int *m){
 	int j;
 
 	for(i = 0; i < tamanho; i++)
-		for(j = i+1; j < tamanho; j++)
-			if(vetor[j] < vetor[i])
+		for(j = i+1; j < tamanho; j++){
+			(*c)++; // Uma comparação por interação do for
+			if(vetor[j] < vetor[i]){
 				troca(vetor, i, j);
+				*m += 2; // A cada troca adiciona 2 movimentações
+			}
+		}
 }
 
 /**
@@ -80,11 +84,16 @@ void insertionSort(int *vetor, int tamanho, int *c, int *m){
 	for(i = 1; i < tamanho; i++){
 		atual = vetor[i];
 		j = i - 1;
+
 		while(j > -1 && vetor[j] > atual){
+			(*c)++; // comparação
 			vetor[j + 1] = vetor[j];
+			(*m)++;
 			j--;
 		}
+		(*c)++; // Uma a mais por causa da última que não entra
 		vetor[j+1] = atual;
+		(*m)++;
 	}
 }
 
@@ -95,7 +104,7 @@ void insertionSort(int *vetor, int tamanho, int *c, int *m){
  * @param meio   indice do meio do vetor
  * @param fim    indice do final do vetor
  */
-void merge(int *vetor, int inicio, int meio, int fim){
+void merge(int *vetor, int inicio, int meio, int fim, int *c, int *m){
 	int i;
 	int j;
 	int k;
@@ -122,10 +131,12 @@ void merge(int *vetor, int inicio, int meio, int fim){
 	j = 0;
 	k = inicio;
 	while (i < n1 && j < n2){
+		(*c)++; // Uma comparação no if
 		if (auxEsquerda[i] <= auxDireita[j])
 			vetor[k] = auxEsquerda[i++];
 		else
 			vetor[k] = auxDireita[j++];
+		(*m)++; // Uma movimentação por interação do while
 		k++;
 	}
 
@@ -158,7 +169,7 @@ void mergeSort(int *vetor, int inicio, int fim, int *c, int *m){
 		mergeSort(vetor, meio+1, fim, c, m);
 
 		// Verificação da quantidade máxima de merges
-		merge(vetor, inicio, meio, fim);
+		merge(vetor, inicio, meio, fim, c, m);
 	}
 }
 
@@ -172,17 +183,21 @@ void mergeSort(int *vetor, int inicio, int fim, int *c, int *m){
  * @param  fim      índice do último elemento do vetor
  * @return          índice do inteiro que foi colocado no lugar certo
  */
-int particao(int *vetor, int inicio, int fim){
+int particao(int *vetor, int inicio, int fim, int *c, int *m){
 	int i = (inicio - 1);
 	int j;
 	int pivo = vetor[fim];
 
-	for (j = inicio; j <= fim - 1; j++)
+	for (j = inicio; j <= fim - 1; j++){
+		(*c)++; // Uma comparação por if
 		if (vetor[j] < pivo){
 			i++;
 			troca(vetor, i, j);
+			*m += 2; // Duas movimentações por troca
 		}
+	}
 	troca(vetor, i + 1, fim);
+	*m += 2; // Duas movimentações por troca
 	return (i + 1);
 }
 
@@ -197,7 +212,7 @@ int particao(int *vetor, int inicio, int fim){
 void quickSort(int *vetor, int inicio, int fim, int *c, int *m){
 	int i;
 	if (inicio < fim){
-		i = particao(vetor, inicio, fim);
+		i = particao(vetor, inicio, fim, c, m);
 		quickSort(vetor, inicio, i - 1, c, m);
 		quickSort(vetor, i + 1, fim, c, m);
 	}
@@ -209,25 +224,28 @@ void quickSort(int *vetor, int inicio, int fim, int *c, int *m){
  * @param tamanho tamanho do vetor
  * @param raiz    índice da raiz
  */
-void constroiHeap(int *vetor, int tamanho, int raiz){
+void constroiHeap(int *vetor, int tamanho, int raiz, int *c, int *m){
 	int maior = raiz;
 	int esquerda = 2 * raiz + 1;
 	int direita = 2 * raiz + 2;
 
 	// Se o filho da esquerda é maior que a raiz
+	(*c)++; // Uma comparação no if
 	if (esquerda < tamanho && vetor[esquerda] > vetor[maior])
 		maior = esquerda;
 
 	// Se o filho da direita é maior que o maior
+	(*c)++; // Uma comparação no if
 	if (direita < tamanho && vetor[direita] > vetor[maior])
 		maior = direita;
 
 	// Caso o maior não for a raiz
 	if (maior != raiz){
 		troca(vetor, raiz, maior);
+		*m += 2; // Duas movimentações por troca
 
 		// Reconstroi a heap
-		constroiHeap(vetor, tamanho, maior);
+		constroiHeap(vetor, tamanho, maior, c, m);
 	}
 }
 
@@ -242,13 +260,14 @@ void heapSort(int *vetor, int tamanho, int *c, int *m){
 	int i;
 	// Fazendo a heap
 	for (i = (tamanho / 2) - 1; i > -1; i--)
-		constroiHeap(vetor, tamanho, i);
+		constroiHeap(vetor, tamanho, i, c, m);
 
 	for (i = tamanho - 1; i > -1; i--){
 		troca(vetor, 0, i);
+		*m += 2; // Duas movimentações por troca
 
 		// Faz a heap com o resto
-		constroiHeap(vetor, i, 0);
+		constroiHeap(vetor, i, 0, c, m);
 	}
 }
 
@@ -336,6 +355,8 @@ int main (int argc, char *argv[]){
 	// Parte de execução dos algoritmos
 	for(i = 0; i < nAlgoritmos; i++){
 		clone = copia(dados, n);
+		m = 0;
+		c = 0;
 		if(!strcmp(algoritmos[i], IS)){
 			insertionSort(clone, n, &c, &m);
 			verifica(C, M, c, m, i);
