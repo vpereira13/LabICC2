@@ -173,7 +173,7 @@ Item *criaItem(int valor){
  * @param I item a ser impresso
  */
 void imprimeItem(Item *I){
-	printf("%d ", I->valor);
+	printf(" %d", I->valor);
 }
 
 /**

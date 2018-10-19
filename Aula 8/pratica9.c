@@ -40,9 +40,9 @@ int main (int argc, char *argv[]){
 			I = retira(baralho);
 			insere(baralho, I);
 		}
-		printf("Cartas jogadas: ");
+		printf("Cartas jogadas:");
 		imprimeFila(mesa);
-		printf("Cart restante: %d\n", valor(I));
+		printf("Carta restante: %d\n", valor(I));
 
 		esvaziaFila(baralho);
 		esvaziaFila(mesa);
