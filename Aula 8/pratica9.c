@@ -12,6 +12,23 @@
 #include <stdlib.h>
 
 int main (int argc, char *argv[]){
+	int i;
+	int ncasos;
+	int carta;
+
+	// Pegando número de casos
+	scanf("%d\n", &ncasos);
+
+	// Para cada caso
+	for(i = 0; i < ncasos; i++){
+		// Coleta as cartas e coloca na estrutura
+		scanf("%d", &carta);
+		while(carta){
+			// Adicionar carta na estrutura
+			scanf("%d", &carta);
+		}
+		// Roda o algoritmo de descarte e reposição
+	}
 
 	return 0;
 }
