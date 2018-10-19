@@ -2,7 +2,7 @@
 PROJECT = Aula 8
 
 # Objects
-OBJECTS = pratica9.o
+OBJECTS = pratica9.o fila.o
 BIN = pratica9
 
 # Maintainer flags
