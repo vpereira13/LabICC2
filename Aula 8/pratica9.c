@@ -50,7 +50,6 @@ int main (int argc, char *argv[]){
 
 	free(baralho);
 	free(mesa);
-	free(I);
-	
+
 	return 0;
 }
