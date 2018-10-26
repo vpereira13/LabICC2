@@ -4,7 +4,7 @@
  * Prof: André Carlos Ponce de Leon Ferreira de Carvalho
  *
  * Aula 9
- * Exercício 1 - Cartas
+ * Exercício 1 - Editor de Árvore Binária de Busca
  * Victor Luiz da Silva Mariano Pereira	8602444
  */
 
