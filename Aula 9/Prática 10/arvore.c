@@ -73,14 +73,14 @@ void cria_arvore(Arvore *A, char *string, int *i){
  * @param B segunda árvore a ser analisada e resultado da mistura
  */
 void mistura_arvores(Arvore *A, Arvore *B){
+	// Caso a árvore A for vazia, a B tem que manter o que ela tem
+	if (A->tipo == 'e')
+		return;
 	// Caso a árvore A for cheia, a B tem que ser cheia
-	if(A->tipo == 'f'){
+	else if(A->tipo == 'f'){
 		B->tipo = 'f';
 		return;
 	}
-	// Caso a árvore A for vazia, a B tem que manter o que ela tem
-	else if (A->tipo == 'e')
-		return;
 	// Caso a árvore A for do tipo pai
 	else if (A->tipo == 'p'){
 		// Caso a árvore B for cheia, mantém cheia
