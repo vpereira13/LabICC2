@@ -12,4 +12,7 @@
 
 typedef struct arvore Arvore;
 
+Arvore *inicia_arvore();
+void cria_arvore(Arvore *, char *, int *);
+
 #endif

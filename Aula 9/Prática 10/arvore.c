@@ -43,11 +43,11 @@ Arvore *inicia_arvore(){
  * @param string string que representa a árvore
  * @param i      iteração para ter controle da parte da string
  */
-void cria_arvore(Arvore *A, char *string, int i){
+void cria_arvore(Arvore *A, char *string, int *i){
 	int tamanho;
 	tamanho = strlen(string);
-	if(i < tamanho){
-		A->tipo = string[i++];
+	if(*i < tamanho){
+		A->tipo = string[(*i)++];
 
 		if(A->tipo == 'p'){
 			A->esquerda = inicia_arvore();
@@ -67,6 +67,6 @@ void cria_arvore(Arvore *A, char *string, int i){
 }
 
 void mistura_arvores(Arvore *A, Arvore *B){
-	if(A->tipo == '')
+	//if(A->tipo == '')
 
 }
