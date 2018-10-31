@@ -92,27 +92,27 @@ void mistura_arvores(Arvore *A, Arvore *B){
 			B->tipo = 'p';
 			B->esquerda = A->esquerda;
 			B->meio_esquerda = A->meio_esquerda;
-			B->direita = A->direita;
 			B->meio_direita = A->meio_direita;
+			B->direita = A->direita;
 			return;
 		}
 		// Caso a árvore B for do tipo pai, tem que ser analisado cada filho
 		else if (B->tipo == 'p'){
-			mistura_arvores(B->esquerda, A->esquerda);
-			mistura_arvores(B->meio_esquerda, A->meio_esquerda);
-			mistura_arvores(B->direita, A->direita);
-			mistura_arvores(B->meio_direita, A->meio_direita);
+			mistura_arvores(A->esquerda, B->esquerda);
+			mistura_arvores(A->meio_esquerda, B->meio_esquerda);
+			mistura_arvores(A->meio_direita, B->meio_direita);
+			mistura_arvores(A->direita, B->direita);
 		}
 	}
 }
 
 void contagem(Arvore *A, int *npixels, int nivel){
 	// Condição de parada
-	if(A == NULL || A->tipo == 'e')
+	if(!A)
 		return;
 	// Caso necessário a contagem
 	if(A->tipo == 'f'){
-		(*npixels) += pow(2, (10 - nivel));
+		(*npixels) += 1024 / pow(4, nivel);
 		return;
 	}
 
@@ -120,6 +120,23 @@ void contagem(Arvore *A, int *npixels, int nivel){
 	nivel++;
 	contagem(A->esquerda, npixels, nivel);
 	contagem(A->meio_esquerda, npixels, nivel);
-	contagem(A->direita, npixels, nivel);
 	contagem(A->meio_direita, npixels, nivel);
+	contagem(A->direita, npixels, nivel);
+}
+
+/**
+ * Função recursiva que imprime uma árvore de forma pré-ordem, feita para
+ * auxiliar na depuração do programa
+ * @param A árvore a ser impressa
+ */
+void imprime_arvore(Arvore *A){
+	if(!A)
+		return;
+	else{
+		printf("%c", A->tipo);
+		imprime_arvore(A->esquerda);
+		imprime_arvore(A->meio_esquerda);
+		imprime_arvore(A->meio_direita);
+		imprime_arvore(A->direita);
+	}
 }
