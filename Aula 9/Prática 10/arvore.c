@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "arvore.h"
 
 struct arvore{
@@ -67,8 +68,8 @@ void cria_arvore(Arvore *A, char *string, int *i){
 }
 
 /**
- * Função que mistura duas árvores de entrada e a segunda árvore fica como
- * resultado da mistura
+ * Função recursiva que mistura duas árvores de entrada e a segunda árvore fica
+ * como resultado da mistura
  * @param A primeira árvore a ser analisada
  * @param B segunda árvore a ser analisada e resultado da mistura
  */
@@ -103,4 +104,22 @@ void mistura_arvores(Arvore *A, Arvore *B){
 			mistura_arvores(B->meio_direita, A->meio_direita);
 		}
 	}
+}
+
+void contagem(Arvore *A, int *npixels, int nivel){
+	// Condição de parada
+	if(A == NULL || A->tipo == 'e')
+		return;
+	// Caso necessário a contagem
+	if(A->tipo == 'f'){
+		(*npixels) += pow(2, (10 - nivel));
+		return;
+	}
+
+	// Caso for para os níveis de baixo
+	nivel++;
+	contagem(A->esquerda, npixels, nivel);
+	contagem(A->meio_esquerda, npixels, nivel);
+	contagem(A->direita, npixels, nivel);
+	contagem(A->meio_direita, npixels, nivel);
 }
