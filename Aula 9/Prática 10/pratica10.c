@@ -10,12 +10,16 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "arvore.h"
 
 int main (int argc, char *argv[]){
 	int i;
 	int ncasos;
+	int iteracao;
 	char *str_arvore1;
 	char *str_arvore2;
+	Arvore *arvore1;
+	Arvore *arvore2;
 
 	scanf("%d\n", &ncasos);
 
@@ -25,6 +29,14 @@ int main (int argc, char *argv[]){
 	for(i = 0; i < ncasos; i++){
 		scanf("%s\n", str_arvore1);
 		scanf("%s\n", str_arvore2);
+
+		arvore1 = inicia_arvore();
+		iteracao = 0;
+		cria_arvore(arvore1, str_arvore1, &iteracao);
+
+		arvore2 = inicia_arvore();
+		iteracao = 0;
+		cria_arvore(arvore2, str_arvore2, &iteracao);
 	}
 
 	free(str_arvore1);
