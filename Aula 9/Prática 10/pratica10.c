@@ -47,6 +47,9 @@ int main (int argc, char *argv[]){
 		// Mistura as duas árvores, resultado ficará na segunda árvore
 		mistura_arvores(arvore1, arvore2);
 
+		contagem(arvore2, &npixels, 0);
+
+		// Imprime saída desejada
 		printf("%d %d pixels pretos.\n", i + 1, npixels);
 	}
 
