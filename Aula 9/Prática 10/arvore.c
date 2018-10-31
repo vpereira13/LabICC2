@@ -39,9 +39,9 @@ Arvore *inicia_arvore(){
 
 /**
  * Função para criar a árvore de forma recursiva a partir da string de entrada
- * @param A      árvore a ser gerada
+ * @param A	  árvore a ser gerada
  * @param string string que representa a árvore
- * @param i      iteração para ter controle da parte da string
+ * @param i	  iteração para ter controle da parte da string
  */
 void cria_arvore(Arvore *A, char *string, int *i){
 	int tamanho;
@@ -66,7 +66,41 @@ void cria_arvore(Arvore *A, char *string, int *i){
 		return;
 }
 
+/**
+ * Função que mistura duas árvores de entrada e a segunda árvore fica como
+ * resultado da mistura
+ * @param A primeira árvore a ser analisada
+ * @param B segunda árvore a ser analisada e resultado da mistura
+ */
 void mistura_arvores(Arvore *A, Arvore *B){
-	//if(A->tipo == '')
-
+	// Caso a árvore A for cheia, a B tem que ser cheia
+	if(A->tipo == 'f'){
+		B->tipo = 'f';
+		return;
+	}
+	// Caso a árvore A for vazia, a B tem que manter o que ela tem
+	else if (A->tipo == 'e')
+		return;
+	// Caso a árvore A for do tipo pai
+	else if (A->tipo == 'p'){
+		// Caso a árvore B for cheia, mantém cheia
+		if (B->tipo == 'f')
+			return;
+		// Caso a árvore B for vazia, então ela recebe o conteúdo da árvore A
+		else if (B->tipo == 'e'){
+			B->tipo = 'p';
+			B->esquerda = A->esquerda;
+			B->meio_esquerda = A->meio_esquerda;
+			B->direita = A->direita;
+			B->meio_direita = A->meio_direita;
+			return;
+		}
+		// Caso a árvore B for do tipo pai, tem que ser analisado cada filho
+		else if (B->tipo == 'p'){
+			mistura_arvores(B->esquerda, A->esquerda);
+			mistura_arvores(B->meio_esquerda, A->meio_esquerda);
+			mistura_arvores(B->direita, A->direita);
+			mistura_arvores(B->meio_direita, A->meio_direita);
+		}
+	}
 }
