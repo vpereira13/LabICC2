@@ -109,7 +109,8 @@ int busca(Hash *H, char *string){
 }
 
 /**
- * Função para limpar a tabela hash e liberar toda a memória
+ * Função para limpar a tabela hash e liberar toda a memória (ainda não está
+ * funcionando direito)
  * @param H tabela hash a ser limpa
  */
 void esvazia_hash(Hash *H){
