@@ -14,5 +14,6 @@ typedef struct arvore Arvore;
 
 Arvore *inicia_arvore();
 void cria_arvore(Arvore *, char *, int *);
+void mistura_arvores(Arvore *, Arvore *);
 
 #endif
