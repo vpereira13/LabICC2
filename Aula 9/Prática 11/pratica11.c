@@ -50,7 +50,7 @@ int main(int argc, char *argv[]){
 
 	// Liberando memória
 	free(palavra);
-	esvazia_hash(H);
+	// esvazia_hash(H); // Precisa corrigir
 	free(H);
 
 	return 0;
