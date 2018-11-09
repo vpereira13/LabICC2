@@ -42,22 +42,30 @@ int main (int argc, char *argv[]){
 
 			// Impressão In Ordem
 			case 'N':
+				printf("InOrdem:");
 				imprimeIN(A);
+				printf("\n");
 				break;
 
 			// Impressão Pre Ordem
 			case 'E':
+				printf("PreOrdem:");
 				imprimePRE(A);
+				printf("\n");
 				break;
 
 			// Impressão Pos Ordem
 			case 'O':
+				printf("PosOrdem:");
 				imprimePOS(A);
+				printf("\n");
 				break;
 
 			// Impressão Largura
 			case 'L':
+				printf("Largura:");
 				imprimeLargura(A);
+				printf("\n");
 				break;
 
 			// Impressão de todas as formas
