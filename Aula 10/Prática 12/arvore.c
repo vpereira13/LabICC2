@@ -28,7 +28,11 @@ Arvore *criaArvore(){
 }
 
 void insereItem(Arvore *A, int valor){
+	if(!A)
+		return;
+	else{
 
+	}
 }
 
 void removeItem(Arvore *A, int valor){
@@ -78,10 +82,18 @@ void imprimeLargura(Arvore *A){
 }
 
 void imprimeTodos(Arvore *A){
+	printf("InOrdem:");
 	imprimeIN(A);
+	printf("\n");
+	printf("PreOrdem:");
 	imprimePRE(A);
+	printf("\n");
+	printf("PosOrdem:");
 	imprimePOS(A);
+	printf("\n");
+	printf("Largura:");
 	imprimeLargura(A);
+	printf("\n");
 }
 
 void esvazia(Arvore *A){
