@@ -97,5 +97,9 @@ void imprimeTodos(Arvore *A){
 }
 
 void esvazia(Arvore *A){
-
+	if(!A){
+		esvazia(A->esquerda);
+		esvazia(A->direita);
+		free(A);
+	}
 }
