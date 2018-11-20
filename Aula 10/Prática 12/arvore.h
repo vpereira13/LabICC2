@@ -12,9 +12,10 @@
 #define _ARVORE_H_
 
 typedef struct arvore Arvore;
+typedef struct item Item;
 
 Arvore *criaArvore();
-void insereItem(Arvore *, int);
+void insereItem(Arvore *, int, int *);
 void removeItem(Arvore *, int);
 int buscaItem(Arvore *, int);
 void imprimeIN(Arvore *);
