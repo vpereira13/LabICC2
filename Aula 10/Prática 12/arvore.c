@@ -39,13 +39,6 @@ Arvore *criaArvore(){
 	return A;
 }
 
-<<<<<<< HEAD
-void insereItem(Arvore *A, int valor){
-	if(!A)
-		return;
-	else{
-
-=======
 void insereItem(Arvore *A, int valor, int *erro){
 	if(!A)
 		A = criaArvore();
@@ -60,7 +53,6 @@ void insereItem(Arvore *A, int valor, int *erro){
 			insereItem(A->direita, valor, erro);
 		else
 			*erro = 1;
->>>>>>> e1ca64f4fde85a415b602ef4772fa78bbe7544bd
 	}
 }
 
@@ -114,14 +106,6 @@ void imprimeTodos(Arvore *A){
 	printf("InOrdem:");
 	imprimeIN(A);
 	printf("\n");
-<<<<<<< HEAD
-	printf("PreOrdem:");
-	imprimePRE(A);
-	printf("\n");
-	printf("PosOrdem:");
-	imprimePOS(A);
-	printf("\n");
-=======
 
 	printf("PreOrdem:");
 	imprimePRE(A);
@@ -131,7 +115,6 @@ void imprimeTodos(Arvore *A){
 	imprimePOS(A);
 	printf("\n");
 
->>>>>>> e1ca64f4fde85a415b602ef4772fa78bbe7544bd
 	printf("Largura:");
 	imprimeLargura(A);
 	printf("\n");
