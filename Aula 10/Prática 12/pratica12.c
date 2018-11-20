@@ -14,6 +14,7 @@
 
 int main (int argc, char *argv[]){
 	int chave;
+	int erro;
 	char instrucao;
 
 	Arvore *A = criaArvore();
@@ -25,7 +26,7 @@ int main (int argc, char *argv[]){
 			// Inserção
 			case 'I':
 				scanf("%d\n", &chave);
-				insereItem(A, chave);
+				insereItem(A, chave, &erro);
 				break;
 
 			// Remoção
