@@ -14,6 +14,7 @@
 
 int main (int argc, char *argv[]){
 	int chave;
+	int erro;
 	char instrucao;
 
 	Arvore *A = criaArvore();
@@ -25,7 +26,7 @@ int main (int argc, char *argv[]){
 			// Inserção
 			case 'I':
 				scanf("%d\n", &chave);
-				insereItem(A, chave);
+				insereItem(A, chave, &erro);
 				break;
 
 			// Remoção
@@ -42,22 +43,30 @@ int main (int argc, char *argv[]){
 
 			// Impressão In Ordem
 			case 'N':
+				printf("InOrdem:");
 				imprimeIN(A);
+				printf("\n");
 				break;
 
 			// Impressão Pre Ordem
 			case 'E':
+				printf("PreOrdem:");
 				imprimePRE(A);
+				printf("\n");
 				break;
 
 			// Impressão Pos Ordem
 			case 'O':
+				printf("PosOrdem:");
 				imprimePOS(A);
+				printf("\n");
 				break;
 
 			// Impressão Largura
 			case 'L':
+				printf("Largura:");
 				imprimeLargura(A);
+				printf("\n");
 				break;
 
 			// Impressão de todas as formas
