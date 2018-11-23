@@ -66,7 +66,7 @@ int buscaItem(Arvore *A, int valor){
 	else{
 		if(A->i->conteudo == valor)
 			return 1;
-		return valor > A->i->conteudo ? buscaItem(A->direita, valor) : buscaItem(A->esquerda, valor);
+		return (valor > A->i->conteudo ? buscaItem(A->direita, valor) : buscaItem(A->esquerda, valor));
 	}
 }
 
