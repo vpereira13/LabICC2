@@ -27,6 +27,8 @@ int main (int argc, char *argv[]){
 			case 'I':
 				scanf("%d\n", &chave);
 				insereItem(A, chave, &erro);
+				if(erro)
+					printf("Chave existente\n");
 				break;
 
 			// Remoção
