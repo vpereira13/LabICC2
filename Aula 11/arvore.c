@@ -71,3 +71,27 @@ void imprimeArvore(Arvore *A){
         imprimeArvore(A->direita);
     }
 }
+
+/**
+ * Função que dada uma árvore é percorrida, de forma recursiva, retornando
+ * o último nó atingido, sendo que se o flag do nó for verdadeiro, é descido
+ * pela direita, se for falso, é descido para a esquerda
+ *
+ * @param  *A: Árvore, ou sub-árvore a ser percorrida
+ *
+ * @retval Valor do nó folha atingido
+ */
+int jogaBola(Arvore *A){
+    if(A->direita != NULL && A->esquerda != NULL){
+        if(A->flag == 'v'){
+            A->flag = 'f';
+            return jogaBola(A->direita);
+        }
+        else if(A->flag == 'f'){
+            A->flag = 'v';
+            return jogaBola(A->esquerda);
+        }
+    }
+
+    return A->valor;
+}
