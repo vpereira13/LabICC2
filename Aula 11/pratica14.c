@@ -8,3 +8,20 @@
  * Victor Luiz da Silva Mariano Pereira 8602444
  */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include "arvore.h"
+
+int main(int argc, char const *argv[]){
+    int altura;
+    int nbolas;
+    Arvore *A = NULL;
+
+    scanf("%d %d", &altura, &nbolas);
+
+    A = criaArvore(1, altura);
+
+    imprimeArvore(A);
+
+    return 0;
+}
