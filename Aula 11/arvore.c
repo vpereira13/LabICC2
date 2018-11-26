@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "arvore.h"
 
 /**
@@ -51,7 +52,7 @@ Arvore *iniciaArvore(){
 Arvore *criaArvore(int valor, int altura){
     Arvore *A = iniciaArvore();
     A->valor = valor;
-    if(valor * 2 < (altura * altura) - 1){
+    if(valor * 2 < pow(2, altura) - 1){
         A->esquerda = criaArvore(valor * 2, altura);
         A->direita = criaArvore(valor * 2 + 1, altura);
     }
