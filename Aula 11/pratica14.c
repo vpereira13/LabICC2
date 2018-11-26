@@ -15,13 +15,17 @@
 int main(int argc, char const *argv[]){
     int altura;
     int nbolas;
+    int final;
     Arvore *A = NULL;
 
     scanf("%d %d", &altura, &nbolas);
 
     A = criaArvore(1, altura);
 
-    imprimeArvore(A);
+    while(nbolas--)
+        final = jogaBola(A);
+
+    printf("%d\n", final);
 
     return 0;
 }
