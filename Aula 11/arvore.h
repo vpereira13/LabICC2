@@ -14,5 +14,6 @@
 typedef struct arvore Arvore;
 Arvore *criaArvore(int, int);
 void imprimeArvore(Arvore *);
+int jogaBola(Arvore *);
 
 #endif
