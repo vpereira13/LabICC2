@@ -8,3 +8,11 @@
  * Victor Luiz da Silva Mariano Pereira 8602444
  */
 
+#ifndef _ARVORE_H_
+#define _ARVORE_H_
+
+typedef struct arvore Arvore;
+Arvore *criaArvore(int, int);
+void imprimeArvore(Arvore *);
+
+#endif
