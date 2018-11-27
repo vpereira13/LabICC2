@@ -13,6 +13,7 @@
 
 typedef struct arvore Arvore;
 Arvore *criaArvore(int, int);
+void esvaziaArvore(Arvore *);
 void imprimeArvore(Arvore *);
 int jogaBola(Arvore *);
 
