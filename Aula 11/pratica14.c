@@ -27,5 +27,8 @@ int main(int argc, char const *argv[]){
 
     printf("%d\n", final);
 
+    esvaziaArvore(A);
+    free(A);
+
     return 0;
 }
