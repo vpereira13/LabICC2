@@ -96,3 +96,19 @@ int jogaBola(Arvore *A){
 
     return A->valor;
 }
+
+/**
+ * Função para liberar a memória alocada pela árvore
+ *
+ * @param  *A: Árvore a ser desalocada
+ */
+void esvaziaArvore(Arvore *A){
+    if(A->direita && A->esquerda){
+        if(A->direita->direita){
+            esvaziaArvore(A->direita);
+            esvaziaArvore(A->esquerda);
+        }
+        free(A->direita);
+        free(A->esquerda);
+    }
+}
