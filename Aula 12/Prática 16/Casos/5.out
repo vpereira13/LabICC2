@@ -1,0 +1,18 @@
+Nao encontrado
+Nao encontrado
+Encontrado
+InOrdem: 500 550 750 766 
+Chave existente
+PosOrdem: 500 750 766 550 
+InOrdem: 500 550 730 750 760 766 770 
+PreOrdem: 750 550 500 730 766 760 770 
+PosOrdem: 500 730 550 760 770 766 750 
+Largura: 750 550 766 500 730 760 770 
+Nao encontrado
+730
+Nao encontrado
+Largura: 750 50 766 30 550 760 770 3 500 
+Encontrado
+570
+Chave existente
+PreOrdem: 750 50 30 3 550 500 766 760 770 
