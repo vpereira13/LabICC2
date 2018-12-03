@@ -32,14 +32,16 @@ int maior(int a, int b){
 }
 
 /**
- * Função para alocar espaço para uma árvore, e retorna um ponteiro para o
- * endereço de memória dela
+ * Função para alocar espaço para uma árvore, com os valores iniciais já
+ * setados, e retorna um ponteiro para o endereço de memória da mesma
  *
- * @retval Ponteiro para uma árvore
+ * @retval ponteiro para uma árvore
  */
-Arvore *criaArvore(){
+Arvore *criaArvore(int valor){
     Arvore *A = (Arvore *) malloc(sizeof(Arvore));
 
+    A->valor = valor;
+    A->altura = 0;
     A->direita = NULL;
     A->esquerda = NULL;
 
@@ -63,7 +65,7 @@ int alturaArvore(Arvore *A){
  * @retval fator de balanceamento
  */
 int fatorBalanceamento(Arvore *A){
-    return alturaArvore(A->esquerda) - alturaArvore(A->direita);
+    return abs(alturaArvore(A->esquerda) - alturaArvore(A->direita));
 }
 
 /**
@@ -138,14 +140,11 @@ int insere(Arvore *A, int valor){
 
     Arvore *novo = NULL;
     if(!A){
-        novo = criaArvore();
+        novo = criaArvore(valor);
         if(!novo)
             return 0;
 
-        novo->valor = valor;
-        novo->altura = 0;
         A = novo;
-
         return 1;
     }
     else{
