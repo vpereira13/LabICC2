@@ -30,6 +30,7 @@ int main (int argc, char *argv[]){
                     printf("Chave existente\n");
                 break;
 
+/*  AINDA PRECISO IMPLEMENTAR
             // Remoção
             case 'D':
                 scanf("%d\n", &chave);
@@ -41,6 +42,7 @@ int main (int argc, char *argv[]){
                 scanf("%d\n", &chave);
                 buscaItem(A, chave) ? printf("Encontrado\n") : printf("Não encontrado\n");
                 break;
+*/
 
             // Impressão In Ordem
             case 'N':
@@ -81,9 +83,11 @@ int main (int argc, char *argv[]){
         scanf("%c", &instrucao);
     }
 
+/* AINDA PRECISO IMPLEMENTAR
     // Liberando memória
     esvazia(A);
     free(A);
+*/
 
     return 0;
 }
