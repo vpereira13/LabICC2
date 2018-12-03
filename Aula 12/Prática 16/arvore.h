@@ -13,7 +13,7 @@
 
 typedef struct arvore Arvore;
 
-Arvore *criaArvore();
+Arvore *criaArvore(int);
 int insere(Arvore *, int);
 
 void imprimeIN(Arvore *);
