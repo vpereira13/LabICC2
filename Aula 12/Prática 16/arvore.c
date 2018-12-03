@@ -19,10 +19,24 @@ struct arvore{
     struct arvore *direita;
 };
 
+/**
+ * Função para verificar qual o maior entre dois números
+ *
+ * @param  a: Primeiro valor a ser verificado
+ * @param  b: Segundo valor a ser verificado
+ *
+ * @retval Maior entre os dois valores
+ */
 int maior(int a, int b){
     return a > b ? a : b;
 }
 
+/**
+ * Função para alocar espaço para uma árvore, e retorna um ponteiro para o
+ * endereço de memória dela
+ *
+ * @retval Ponteiro para uma árvore
+ */
 Arvore *criaArvore(){
     Arvore *A = (Arvore *) malloc(sizeof(Arvore));
 
@@ -32,14 +46,31 @@ Arvore *criaArvore(){
     return A;
 }
 
+/**
+ * Função que retorna a altura de uma árvore
+ *
+ * @param  *A: Árvore a ser analisada
+ * @retval altura da árvore, se ela não existir, retorna -1
+ */
 int alturaArvore(Arvore *A){
     return A ? A->altura : -1;
 }
 
+/**
+ * Função que calcula o fator de balanceamento de uma árvore
+ *
+ * @param  *A: Árvore a ser analisada
+ * @retval fator de balanceamento
+ */
 int fatorBalanceamento(Arvore *A){
-    return abs(alturaArvore(A->esquerda) - alturaArvore(A->direita));
+    return alturaArvore(A->esquerda) - alturaArvore(A->direita);
 }
 
+/**
+ * Função auxiliar que faz uma rotação simples para a direita
+ *
+ * @param  *A: árvore que tem que ser rotacionada
+ */
 void rotacaoDireita(Arvore *A){
     Arvore *Aux = NULL;
 
@@ -53,6 +84,11 @@ void rotacaoDireita(Arvore *A){
     A = Aux;
 }
 
+/**
+ * Função auxiliar que faz uma rotação simples para a esquerda
+ *
+ * @param  *A: árvore que tem que ser rotacionada
+ */
 void rotacaoEsquerda(Arvore *A){
     Arvore *Aux = NULL;
 
@@ -66,15 +102,37 @@ void rotacaoEsquerda(Arvore *A){
     A = Aux;
 }
 
+/**
+ * Função auxiliar que faz uma rotação dupla, primeiro para a esquerda no filho
+ * da direita e depois uma a direita no nó principal
+ *
+ * @param  *A: árvore que tem que ser rotacionada
+ */
 void rotacaoDireitaEsquerda(Arvore *A){
     rotacaoEsquerda(A->direita);
     rotacaoDireita(A);
 }
+
+/**
+ * Função auxiliar que faz uma rotação dupla, primeiro para a direita no filho
+ * da esquerda e depois uma a esquerda no nó principal
+ *
+ * @param  *A: árvore que tem que ser rotacionada
+ */
 void rotacaoEsquerdaDireita(Arvore *A){
     rotacaoDireita(A->esquerda);
     rotacaoEsquerda(A);
 }
 
+/**
+ * Função que insere um valor em uma árvore, já aplicando rotações se caso
+ * necessário
+ *
+ * @param  *A: árvore a ser inserido o valor
+ * @param  valor: valor a ser inserido na árvore
+ * @retval 0 - se falha
+ *         1 - se sucesso
+ */
 int insere(Arvore *A, int valor){
     int resultado;
 
@@ -118,6 +176,11 @@ int insere(Arvore *A, int valor){
     return resultado;
 }
 
+/**
+ * Função para imprimir uma árvore de forma IN ordem
+ *
+ * @param  *A: árvore a ser impressa
+ */
 void imprimeIN(Arvore *A){
     if(!A)
         return;
@@ -127,6 +190,12 @@ void imprimeIN(Arvore *A){
         imprimeIN(A->direita);
     }
 }
+
+/**
+ * Função para imprimir uma árvore de forma PRE ordem
+ *
+ * @param  *A: árvore a ser impressa
+ */
 void imprimePRE(Arvore *A){
     if(!A)
         return;
@@ -136,6 +205,12 @@ void imprimePRE(Arvore *A){
         imprimeIN(A->direita);
     }
 }
+
+/**
+ * Função para imprimir uma árvore de forma POS ordem
+ *
+ * @param  *A: árvore a ser impressa
+ */
 void imprimePOS(Arvore *A){
     if(!A)
         return;
@@ -145,11 +220,22 @@ void imprimePOS(Arvore *A){
         printf(" %d", A->valor);
     }
 }
+
+/**
+ * Função para imprimir uma árvore de forma de largura
+ *
+ * @param  *A: árvore a ser impressa
+ */
 void imprimeLargura(Arvore *A){
     if(!A)
         return;
 }
 
+/**
+ * Função para imprimir uma árvore de todas as formas
+ *
+ * @param  *A: árvore a ser impressa
+ */
 void imprimeTodos(Arvore *A){
     printf("InOrdem:");
     imprimeIN(A);
