@@ -271,3 +271,10 @@ void esvazia(Arvore *A){
         free(A);
     }
 }
+
+int busca(Arvore *A, int valor){
+    if(!A)
+        return 0;
+    else
+        return A->valor == valor ? 1 : (A->valor > valor ? busca(A->esquerda, valor) : busca(A->direita, valor));
+}
