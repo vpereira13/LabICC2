@@ -37,13 +37,13 @@ int main (int argc, char *argv[]){
                 scanf("%d\n", &chave);
                 removeItem(A, chave);
                 break;
+*/
 
             // Busca
             case 'B':
                 scanf("%d\n", &chave);
-                buscaItem(A, chave) ? printf("Encontrado\n") : printf("Não encontrado\n");
+                busca(A, chave) ? printf("Encontrado\n") : printf("Não encontrado\n");
                 break;
-*/
 
             // Impressão In Ordem
             case 'N':
