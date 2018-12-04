@@ -14,12 +14,13 @@
 typedef struct arvore Arvore;
 
 Arvore *criaArvore(int);
-int insere(Arvore *, int);
+Arvore *insere(Arvore *, int, int *);
 
 void imprimeIN(Arvore *);
 void imprimePRE(Arvore *);
 void imprimePOS(Arvore *);
 void imprimeLargura(Arvore *);
 void imprimeTodos(Arvore *);
+void esvazia(Arvore *);
 
 #endif
