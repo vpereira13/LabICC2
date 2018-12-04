@@ -21,6 +21,7 @@ void imprimePRE(Arvore *);
 void imprimePOS(Arvore *);
 void imprimeLargura(Arvore *);
 void imprimeTodos(Arvore *);
+int busca(Arvore *, int);
 void esvazia(Arvore *);
 
 #endif
