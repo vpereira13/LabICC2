@@ -65,65 +65,41 @@ int alturaArvore(Arvore *A){
  * @retval fator de balanceamento
  */
 int fatorBalanceamento(Arvore *A){
-    return abs(alturaArvore(A->esquerda) - alturaArvore(A->direita));
+    if(!A)
+        return 0;
+    return alturaArvore(A->esquerda) - alturaArvore(A->direita);
 }
 
-/**
- * Função auxiliar que faz uma rotação simples para a direita
- *
- * @param  *A: árvore que tem que ser rotacionada
- */
-void rotacaoDireita(Arvore *A){
+Arvore *rotacaoDireita(Arvore *A){
     Arvore *Aux = NULL;
+    Arvore *Novo = NULL;
 
-    Aux = A->esquerda;
-    A->esquerda = Aux->direita;
-    Aux->direita = A;
+    Novo = A->esquerda;
+    Aux = Novo->direita;
+
+    Novo->direita = A;
+    A->esquerda = Aux;
+
     A->altura = maior(alturaArvore(A->esquerda), alturaArvore(A->direita)) + 1;
+    Novo->altura = maior(alturaArvore(Novo->esquerda), alturaArvore(Novo->direita)) + 1;
 
-    Aux->altura = maior(alturaArvore(Aux->esquerda), A->altura) + 1;
-
-    A = Aux;
+    return Novo;
 }
 
-/**
- * Função auxiliar que faz uma rotação simples para a esquerda
- *
- * @param  *A: árvore que tem que ser rotacionada
- */
-void rotacaoEsquerda(Arvore *A){
+Arvore *rotacaoEsquerda(Arvore *A){
     Arvore *Aux = NULL;
+    Arvore *Novo = NULL;
 
-    Aux = A->direita;
-    A->direita = Aux->esquerda;
-    Aux->esquerda = A;
+    Novo = A->direita;
+    Aux = Novo->esquerda;
+
+    Novo->esquerda = A;
+    A->direita = Aux;
+
     A->altura = maior(alturaArvore(A->esquerda), alturaArvore(A->direita)) + 1;
+    Novo->altura = maior(alturaArvore(Novo->esquerda), alturaArvore(Novo->direita)) + 1;
 
-    Aux->altura = maior(alturaArvore(Aux->direita), A->altura) + 1;
-
-    A = Aux;
-}
-
-/**
- * Função auxiliar que faz uma rotação dupla, primeiro para a esquerda no filho
- * da direita e depois uma a direita no nó principal
- *
- * @param  *A: árvore que tem que ser rotacionada
- */
-void rotacaoDireitaEsquerda(Arvore *A){
-    rotacaoEsquerda(A->direita);
-    rotacaoDireita(A);
-}
-
-/**
- * Função auxiliar que faz uma rotação dupla, primeiro para a direita no filho
- * da esquerda e depois uma a esquerda no nó principal
- *
- * @param  *A: árvore que tem que ser rotacionada
- */
-void rotacaoEsquerdaDireita(Arvore *A){
-    rotacaoDireita(A->esquerda);
-    rotacaoEsquerda(A);
+    return Novo;
 }
 
 /**
@@ -139,30 +115,33 @@ Arvore *insere(Arvore *A, int valor, int *erro){
     if(!A)
         return criaArvore(valor);
     else{
-        if(valor < A->valor){
+        if(valor < A->valor)
             A->esquerda = insere(A->esquerda, valor, erro);
-            //if(fatorBalanceamento(A) > 1){
-            //    if(valor < A->esquerda->valor)
-            //        rotacaoEsquerda(A);
-            //    else
-            //        rotacaoEsquerdaDireita(A);
-            //}
-        }
-        else if(valor > A->valor){
+        else if(valor > A->valor)
             A-> direita = insere(A->direita, valor, erro);
-            //if(fatorBalanceamento(A) > 1){
-            //    if(valor > A->direita->valor)
-            //        rotacaoDireita(A);
-            //    else
-            //        rotacaoDireitaEsquerda(A);
-            //}
-        }
         else{
             *erro = 1;
             return A;
         }
     }
+
     A->altura = maior(alturaArvore(A->esquerda), alturaArvore(A->direita)) + 1;
+
+    if(fatorBalanceamento(A) > 1 && valor < A->esquerda->valor)
+        return rotacaoDireita(A);
+
+    if(fatorBalanceamento(A) < -1 && valor > A->direita->valor)
+        return rotacaoEsquerda(A);
+
+    if(fatorBalanceamento(A) > 1 && valor > A->esquerda->valor){
+        A->esquerda =  rotacaoEsquerda(A->esquerda);
+        return rotacaoDireita(A);
+    }
+
+    if(fatorBalanceamento(A) < -1 && valor < A->direita->valor){
+        A->direita = rotacaoDireita(A->direita);
+        return rotacaoEsquerda(A);
+    }
 
     return A;
 }
