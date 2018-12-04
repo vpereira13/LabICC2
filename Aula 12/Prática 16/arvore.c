@@ -135,44 +135,36 @@ void rotacaoEsquerdaDireita(Arvore *A){
  * @retval 0 - se falha
  *         1 - se sucesso
  */
-int insere(Arvore *A, int valor){
-    int resultado;
-
-    Arvore *novo = NULL;
-    if(!A){
-        novo = criaArvore(valor);
-        if(!novo)
-            return 0;
-
-        A = novo;
-        return 1;
-    }
+Arvore *insere(Arvore *A, int valor, int *erro){
+    if(!A)
+        return criaArvore(valor);
     else{
-        novo = A;
-        if(valor < novo->valor){
-            if((resultado = insere(novo->esquerda, valor)) == 1)
-                if(fatorBalanceamento(novo) > 1){
-                    if(valor < A->esquerda->valor)
-                        rotacaoEsquerda(A);
-                    else
-                        rotacaoEsquerdaDireita(A);
-                }
+        if(valor < A->valor){
+            A->esquerda = insere(A->esquerda, valor, erro);
+            //if(fatorBalanceamento(A) > 1){
+            //    if(valor < A->esquerda->valor)
+            //        rotacaoEsquerda(A);
+            //    else
+            //        rotacaoEsquerdaDireita(A);
+            //}
         }
-        else if(valor > novo->valor){
-            if((resultado = insere(novo->direita, valor)) == 1)
-                if(fatorBalanceamento(novo) > 1){
-                    if(valor > A->direita->valor)
-                        rotacaoDireita(A);
-                    else
-                        rotacaoDireitaEsquerda(A);
-                }
+        else if(valor > A->valor){
+            A-> direita = insere(A->direita, valor, erro);
+            //if(fatorBalanceamento(A) > 1){
+            //    if(valor > A->direita->valor)
+            //        rotacaoDireita(A);
+            //    else
+            //        rotacaoDireitaEsquerda(A);
+            //}
         }
-        else
-            return 0;
+        else{
+            *erro = 1;
+            return A;
+        }
     }
-    novo->altura = maior(alturaArvore(novo->esquerda), alturaArvore(novo->direita)) +1;
+    A->altura = maior(alturaArvore(A->esquerda), alturaArvore(A->direita)) + 1;
 
-    return resultado;
+    return A;
 }
 
 /**
@@ -221,13 +213,32 @@ void imprimePOS(Arvore *A){
 }
 
 /**
+ * Função auxiliar que imprime os níveis de uma árvore
+ *
+ * @param  *A: árvore a ser impressa
+ * @param  nivel: qual nível está sendo analisado
+ */
+void imprimeNivel(Arvore *A, int nivel){
+    if(!A)
+        return;
+    if(nivel == 1)
+        printf(" %d", A->valor);
+    else if(nivel > 1){
+        imprimeNivel(A->esquerda, nivel - 1);
+        imprimeNivel(A->direita, nivel - 1);
+    }
+}
+
+/**
  * Função para imprimir uma árvore de forma de largura
  *
  * @param  *A: árvore a ser impressa
  */
 void imprimeLargura(Arvore *A){
-    if(!A)
-        return;
+    int i;
+
+    for(i = 0; i < A->altura; i++)
+        imprimeNivel(A, i);
 }
 
 /**
@@ -251,4 +262,12 @@ void imprimeTodos(Arvore *A){
     printf("Largura:");
     imprimeLargura(A);
     printf("\n");
+}
+
+void esvazia(Arvore *A){
+    if(A){
+        esvazia(A->esquerda);
+        esvazia(A->direita);
+        free(A);
+    }
 }
