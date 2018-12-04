@@ -5,7 +5,7 @@
  *
  * Aula 10
  * Exercício 1 - Editor de Árvore Binária de Busca
- * Victor Luiz da Silva Mariano Pereira	8602444
+ * Victor Luiz da Silva Mariano Pereira    8602444
  */
 
 #include <stdio.h>
@@ -13,78 +13,79 @@
 #include "arvore.h"
 
 int main (int argc, char *argv[]){
-	int chave;
-	int erro;
-	char instrucao;
+    int chave;
+    int erro;
+    char instrucao;
 
-	Arvore *A = criaArvore();
+    Arvore *A = NULL;
 
-	scanf("%c", &instrucao);
+    scanf("%c", &instrucao);
 
-	while(instrucao != 'X'){
-		switch(instrucao){
-			// Inserção
-			case 'I':
-				scanf("%d\n", &chave);
-				insereItem(A, chave, &erro);
-				if(erro)
-					printf("Chave existente\n");
-				break;
+    while(instrucao != 'X'){
+        erro = 0;
+        switch(instrucao){
+            // Inserção
+            case 'I':
+                scanf("%d\n", &chave);
+                A = insereItem(A, chave, &erro);
+                if(erro)
+                    printf("Chave existente\n");
+                break;
 
-			// Remoção
-			case 'D':
-				scanf("%d\n", &chave);
-				removeItem(A, chave);
-				break;
+            // Remoção
+            case 'D':
+                scanf("%d\n", &chave);
+                removeItem(A, chave);
+                break;
 
-			// Busca
-			case 'B':
-				scanf("%d\n", &chave);
-				buscaItem(A, chave) ? printf("Encontrado\n") : printf("Não encontrado\n");
-				break;
+            // Busca
+            case 'B':
+                scanf("%d\n", &chave);
+                buscaItem(A, chave) ? printf("Encontrado\n") : printf("Não encontrado\n");
+                break;
 
-			// Impressão In Ordem
-			case 'N':
-				printf("InOrdem:");
-				imprimeIN(A);
-				printf("\n");
-				break;
+            // Impressão In Ordem
+            case 'N':
+                printf("InOrdem:");
+                imprimeIN(A);
+                printf("\n");
+                break;
 
-			// Impressão Pre Ordem
-			case 'E':
-				printf("PreOrdem:");
-				imprimePRE(A);
-				printf("\n");
-				break;
+            // Impressão Pre Ordem
+            case 'E':
+                printf("PreOrdem:");
+                imprimePRE(A);
+                printf("\n");
+                break;
 
-			// Impressão Pos Ordem
-			case 'O':
-				printf("PosOrdem:");
-				imprimePOS(A);
-				printf("\n");
-				break;
+            // Impressão Pos Ordem
+            case 'O':
+                printf("PosOrdem:");
+                imprimePOS(A);
+                printf("\n");
+                break;
 
-			// Impressão Largura
-			case 'L':
-				printf("Largura:");
-				imprimeLargura(A);
-				printf("\n");
-				break;
+            // Impressão Largura
+            case 'L':
+                printf("Largura:");
+                imprimeLargura(A);
+                printf("\n");
+                break;
 
-			// Impressão de todas as formas
-			case 'Y':
-				imprimeTodos(A);
-				break;
+            // Impressão de todas as formas
+            case 'Y':
+                imprimeTodos(A);
+                break;
 
-			default:
-				break;
-		}
-		scanf("%c", &instrucao);
-	}
+            default:
+                break;
+        }
+        scanf("%c", &instrucao);
+    }
 
-	// Liberando memória
-	esvazia(A);
-	free(A);
+    // Liberando memória
+    esvazia(A);
+    //free(A);
 
-	return 0;
+    return 0;
 }
