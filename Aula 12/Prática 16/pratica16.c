@@ -21,12 +21,13 @@ int main (int argc, char *argv[]){
     scanf("%c", &instrucao);
 
     while(instrucao != 'X'){
+        erro = 0;
         switch(instrucao){
             // Inserção
             case 'I':
                 scanf("%d\n", &chave);
-                erro = insere(A, chave);
-                if(!erro)
+                A = insere(A, chave, &erro);
+                if(erro)
                     printf("Chave existente\n");
                 break;
 
@@ -83,11 +84,8 @@ int main (int argc, char *argv[]){
         scanf("%c", &instrucao);
     }
 
-/* AINDA PRECISO IMPLEMENTAR
     // Liberando memória
     esvazia(A);
-    free(A);
-*/
 
     return 0;
 }
