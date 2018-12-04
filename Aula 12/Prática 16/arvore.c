@@ -237,7 +237,7 @@ void imprimeNivel(Arvore *A, int nivel){
 void imprimeLargura(Arvore *A){
     int i;
 
-    for(i = 0; i < A->altura; i++)
+    for(i = 1; i <= (A->altura + 1); i++)
         imprimeNivel(A, i);
 }
 
