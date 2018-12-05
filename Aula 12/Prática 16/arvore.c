@@ -120,8 +120,7 @@ Arvore *rotacaoEsquerda(Arvore *A){
  *
  * @param  *A: árvore a ser inserido o valor
  * @param  valor: valor a ser inserido na árvore
- * @retval 0 - se falha
- *         1 - se sucesso
+ * @retval nova árvore com o item inserido e balanceado
  */
 Arvore *insere(Arvore *A, int valor, int *erro){
     if(!A)
