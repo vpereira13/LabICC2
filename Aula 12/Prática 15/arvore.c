@@ -147,7 +147,7 @@ void imprimeIN(Arvore *A){
         return;
     else{
         imprimeIN(A->esquerda);
-        printf(" %d", A->valor);
+        printf("%d ", A->valor);
         imprimeIN(A->direita);
     }
 }
@@ -161,7 +161,7 @@ void imprimePRE(Arvore *A){
     if(!A)
         return;
     else{
-        printf(" %d", A->valor);
+        printf("%d ", A->valor);
         imprimeIN(A->esquerda);
         imprimeIN(A->direita);
     }
@@ -178,7 +178,7 @@ void imprimePOS(Arvore *A){
     else{
         imprimeIN(A->esquerda);
         imprimeIN(A->direita);
-        printf(" %d", A->valor);
+        printf("%d ", A->valor);
     }
 }
 
@@ -192,7 +192,7 @@ void imprimeNivel(Arvore *A, int nivel){
     if(!A)
         return;
     if(nivel == 1)
-        printf(" %d", A->valor);
+        printf("%d ", A->valor);
     else if(nivel > 1){
         imprimeNivel(A->esquerda, nivel - 1);
         imprimeNivel(A->direita, nivel - 1);
@@ -217,19 +217,19 @@ void imprimeLargura(Arvore *A){
  * @param  *A: árvore a ser impressa
  */
 void imprimeTodos(Arvore *A){
-    printf("InOrdem:");
+    printf("InOrdem: ");
     imprimeIN(A);
     printf("\n");
 
-    printf("PreOrdem:");
+    printf("PreOrdem: ");
     imprimePRE(A);
     printf("\n");
 
-    printf("PosOrdem:");
+    printf("PosOrdem: ");
     imprimePOS(A);
     printf("\n");
 
-    printf("Largura:");
+    printf("Largura: ");
     imprimeLargura(A);
     printf("\n");
 }
