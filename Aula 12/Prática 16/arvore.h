@@ -15,6 +15,7 @@ typedef struct arvore Arvore;
 
 Arvore *criaArvore(int);
 Arvore *insere(Arvore *, int, int *);
+Arvore *removeItem(Arvore *, int, int *);
 
 void imprimeIN(Arvore *);
 void imprimePRE(Arvore *);
