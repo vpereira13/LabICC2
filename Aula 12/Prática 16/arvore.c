@@ -185,8 +185,8 @@ void imprimePRE(Arvore *A){
         return;
     else{
         printf("%d ", A->valor);
-        imprimeIN(A->esquerda);
-        imprimeIN(A->direita);
+        imprimePRE(A->esquerda);
+        imprimePRE(A->direita);
     }
 }
 
@@ -199,8 +199,8 @@ void imprimePOS(Arvore *A){
     if(!A)
         return;
     else{
-        imprimeIN(A->esquerda);
-        imprimeIN(A->direita);
+        imprimePOS(A->esquerda);
+        imprimePOS(A->direita);
         printf("%d ", A->valor);
     }
 }
