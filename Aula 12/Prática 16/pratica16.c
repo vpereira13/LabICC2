@@ -41,7 +41,7 @@ int main (int argc, char *argv[]){
             // Busca
             case 'B':
                 scanf("%d\n", &chave);
-                busca(A, chave) ? printf("Encontrado\n") : printf("Não encontrado\n");
+                busca(A, chave) ? printf("Encontrado\n") : printf("Nao encontrado\n");
                 break;
 
             // Impressão In Ordem
