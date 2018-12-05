@@ -31,13 +31,12 @@ int main (int argc, char *argv[]){
                     printf("Chave existente\n");
                 break;
 
-/*  AINDA PRECISO IMPLEMENTAR
             // Remoção
             case 'D':
                 scanf("%d\n", &chave);
-                removeItem(A, chave);
+                A = removeItem(A, chave, &erro);
+                erro ? printf("Nao encontrado\n") : printf("%d\n", chave);
                 break;
-*/
 
             // Busca
             case 'B':
