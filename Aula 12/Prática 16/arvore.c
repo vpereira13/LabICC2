@@ -257,3 +257,70 @@ int busca(Arvore *A, int valor){
     else
         return A->valor == valor ? 1 : (A->valor > valor ? busca(A->esquerda, valor) : busca(A->direita, valor));
 }
+
+Arvore *menorValor(Arvore *A){
+    Arvore *Aux = A;
+
+    while(Aux->esquerda)
+        Aux = Aux->esquerda;
+
+    return Aux;
+}
+
+Arvore *removeItem(Arvore *A, int valor, int *erro){
+    Arvore *Aux = NULL;
+
+    if(!A){
+        *erro = 1;
+        return A;
+    }
+
+    if(A->valor > valor)
+        A->esquerda = removeItem(A->esquerda, valor, erro);
+    else if(A->valor < valor)
+        A->direita = removeItem(A->direita, valor, erro);
+    else{
+        if(!A->direita || !A->esquerda){
+            Aux = A->direita ? A->direita : A->esquerda;
+
+            if(!Aux){
+                Aux = A;
+                A = NULL;
+            }
+            else
+                *A = *Aux;
+
+            free(Aux);
+        }
+        else{
+            Aux = menorValor(A->direita);
+            A->valor = Aux->valor;
+            A->direita = removeItem(A->direita, Aux->valor, erro);
+        }
+    }
+
+    if (!A)
+      return A;
+
+    A->altura = maior(alturaArvore(A->esquerda), alturaArvore(A->direita)) + 1;
+
+    if (fatorBalanceamento(A) > 1){
+        if(fatorBalanceamento(A->esquerda) >= 0)
+            return rotacaoDireita(A);
+        else{
+            A->esquerda = rotacaoEsquerda(A->esquerda);
+            return rotacaoDireita(A);
+        }
+    }
+
+    if (fatorBalanceamento(A) < -1){
+        if (fatorBalanceamento(A->direita) <= 0)
+            return rotacaoEsquerda(A);
+        else{
+            A->direita = rotacaoDireita(A->direita);
+            return rotacaoEsquerda(A);
+        }
+    }
+
+    return A;
+}
