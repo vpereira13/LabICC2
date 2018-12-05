@@ -70,6 +70,12 @@ int fatorBalanceamento(Arvore *A){
     return alturaArvore(A->esquerda) - alturaArvore(A->direita);
 }
 
+/**
+ * Função que faz uma rotação simples a direita
+ *
+ * @param  *A: árvore a ser rotacionada
+ * @retval ponteiro para uma árvore já rotacionada
+ */
 Arvore *rotacaoDireita(Arvore *A){
     Arvore *Aux = NULL;
     Arvore *Novo = NULL;
@@ -86,6 +92,12 @@ Arvore *rotacaoDireita(Arvore *A){
     return Novo;
 }
 
+/**
+ * Função que faz uma rotação simples a esquerda
+ *
+ * @param  *A: árvore a ser rotacionada
+ * @retval ponteiro para uma árvore já rotacionada
+ */
 Arvore *rotacaoEsquerda(Arvore *A){
     Arvore *Aux = NULL;
     Arvore *Novo = NULL;
@@ -102,6 +114,15 @@ Arvore *rotacaoEsquerda(Arvore *A){
     return Novo;
 }
 
+/**
+ * Função que insere um valor em uma árvore, já aplicando rotações se caso
+ * necessário
+ *
+ * @param  *A: árvore a ser inserido o valor
+ * @param  valor: valor a ser inserido na árvore
+ * @param  *erro: variável para checar se foi inserido corretamente ou não
+ * @retval nova árvore com o item inserido e balanceado
+ */
 Arvore *insere(Arvore *A, int valor, int *erro){
     if(!A)
         return criaArvore(valor);
@@ -234,6 +255,11 @@ void imprimeTodos(Arvore *A){
     printf("\n");
 }
 
+/**
+ * Função que esvazia uma árvore, liberando todo o seu conteúdo
+ *
+ * @param  *A: árvore a ser liberada
+ */
 void esvazia(Arvore *A){
     if(A){
         esvazia(A->esquerda);
