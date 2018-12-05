@@ -70,6 +70,12 @@ int fatorBalanceamento(Arvore *A){
     return alturaArvore(A->esquerda) - alturaArvore(A->direita);
 }
 
+/**
+ * Função que faz uma rotação simples a direita
+ *
+ * @param  *A: árvore a ser rotacionada
+ * @retval ponteiro para uma árvore já rotacionada
+ */
 Arvore *rotacaoDireita(Arvore *A){
     Arvore *Aux = NULL;
     Arvore *Novo = NULL;
@@ -86,6 +92,12 @@ Arvore *rotacaoDireita(Arvore *A){
     return Novo;
 }
 
+/**
+ * Função que faz uma rotação simples a esquerda
+ *
+ * @param  *A: árvore a ser rotacionada
+ * @retval ponteiro para uma árvore já rotacionada
+ */
 Arvore *rotacaoEsquerda(Arvore *A){
     Arvore *Aux = NULL;
     Arvore *Novo = NULL;
@@ -127,20 +139,22 @@ Arvore *insere(Arvore *A, int valor, int *erro){
 
     A->altura = maior(alturaArvore(A->esquerda), alturaArvore(A->direita)) + 1;
 
-    if(fatorBalanceamento(A) > 1 && valor < A->esquerda->valor)
-        return rotacaoDireita(A);
-
-    if(fatorBalanceamento(A) < -1 && valor > A->direita->valor)
-        return rotacaoEsquerda(A);
-
-    if(fatorBalanceamento(A) > 1 && valor > A->esquerda->valor){
-        A->esquerda =  rotacaoEsquerda(A->esquerda);
-        return rotacaoDireita(A);
+    if(fatorBalanceamento(A) > 1){
+        if(A->esquerda->valor > valor)
+            return rotacaoDireita(A);
+        else if(A->esquerda->valor < valor){
+            A->esquerda =  rotacaoEsquerda(A->esquerda);
+            return rotacaoDireita(A);
+        }
     }
 
-    if(fatorBalanceamento(A) < -1 && valor < A->direita->valor){
-        A->direita = rotacaoDireita(A->direita);
-        return rotacaoEsquerda(A);
+    if(fatorBalanceamento(A) < -1){
+        if(A->direita->valor < valor)
+            return rotacaoEsquerda(A);
+        else if(A->direita->valor > valor){
+            A->direita = rotacaoDireita(A->direita);
+            return rotacaoEsquerda(A);
+        }
     }
 
     return A;
@@ -243,6 +257,11 @@ void imprimeTodos(Arvore *A){
     printf("\n");
 }
 
+/**
+ * Função que esvazia uma árvore, liberando todo o seu conteúdo
+ *
+ * @param  *A: árvore a ser liberada
+ */
 void esvazia(Arvore *A){
     if(A){
         esvazia(A->esquerda);
@@ -251,6 +270,14 @@ void esvazia(Arvore *A){
     }
 }
 
+/**
+ * Função que faz uma busca de um valor em uma árvore
+ *
+ * @param  *A: árvore a ser analisada
+ * @param  valor: valor do item a ser encontrado
+ * @retval 0 - se não encontrar o valor
+ *         1 - se encontrar o valor
+ */
 int busca(Arvore *A, int valor){
     if(!A)
         return 0;
@@ -258,6 +285,12 @@ int busca(Arvore *A, int valor){
         return A->valor == valor ? 1 : (A->valor > valor ? busca(A->esquerda, valor) : busca(A->direita, valor));
 }
 
+/**
+ * Função que encontra a sub árvore com o menor valor
+ *
+ * @param  *A: árvore a ser analisada
+ * @retval árvore com o menor valor
+ */
 Arvore *menorValor(Arvore *A){
     Arvore *Aux = A;
 
@@ -267,6 +300,16 @@ Arvore *menorValor(Arvore *A){
     return Aux;
 }
 
+/**
+ * Função que remove um item, se ele existir e rebalanceia a árvore, se
+ * necessário
+ *
+ * @param  *A: árvore analisada e removida o item
+ * @param  valor: valor a ser removido
+ * @param  *erro: variável para verificar se o item foi removido com sucesso ou
+ * não
+ * @retval nova árvore balanceada e sem o item removido
+ */
 Arvore *removeItem(Arvore *A, int valor, int *erro){
     Arvore *Aux = NULL;
 
